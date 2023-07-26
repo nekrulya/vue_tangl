@@ -114,3 +114,34 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.model_properties {
+  min-height: 100vh;
+  min-width: 267px;
+  border: 1px solid black;
+}
+.title_and_hide {
+  padding: 12px 10px;
+}
+.model_properties__title {
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.model_properties__hide {
+  color: #436caa;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 10px;
+}
+
+.properties {
+  border-top: 1px dashed black;
+  padding: 10px;
+}
+</style>

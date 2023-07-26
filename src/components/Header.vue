@@ -18,10 +18,14 @@ export default {
 
 <style scoped>
 .header {
-  height: 30px;
+  height: 80px;
   width: 100%;
   font-size: 24px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  background-color: #025a6c;
+  padding: 0 30px;
 }
 </style>

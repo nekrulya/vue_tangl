@@ -16,6 +16,8 @@ export default {
     ChoosedGroup,
   },
   props: ["choosedItems"],
-  data() {},
+  data() {
+    return {};
+  },
 };
 </script>

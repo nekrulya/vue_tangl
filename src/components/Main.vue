@@ -25,4 +25,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.main {
+  height: 100%;
+}
+
+.content {
+  display: flex;
+}
+</style>

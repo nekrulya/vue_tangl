@@ -17,3 +17,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.choosed__item {
+  display: flex;
+  width: fit-content;
+  margin: 5px 0;
+}
+
+.choosed__item__img {
+  margin-right: 10px;
+}
+
+.arrows {
+  margin-left: 10px;
+  width: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>

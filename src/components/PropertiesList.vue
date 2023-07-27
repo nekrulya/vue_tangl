@@ -4,7 +4,7 @@
       v-for="(item, index) in items"
       :key="index"
       :item="item"
-      :isVisible="isVisible"
+      :showAll="showAll"
     ></ModelGroup>
   </ul>
 </template>
@@ -16,9 +16,9 @@ export default {
   components: {
     ModelGroup,
   },
-  props: ["items"],
+  props: ["items", "showAll"],
   data() {
-    return { isVisible: true };
+    return {};
   },
 };
 </script>

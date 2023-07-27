@@ -1,7 +1,7 @@
 <template>
   <div class="table_view">
     <table class="res_table">
-      <thead>
+      <thead class="thead">
         <tr>
           <th rowspan="2">Наименование</th>
           <th colspan="2">Размер</th>
@@ -62,3 +62,36 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.table_view {
+  border: 1px solid black;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.res_table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.thead {
+  height: 80px;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+.table_download {
+  display: inline-block;
+  margin: 15px;
+  padding: 10px 20px;
+  border: 1px solid black;
+  background-color: #025a6c;
+  color: #fff;
+}
+</style>

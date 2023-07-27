@@ -85,3 +85,31 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.choosed_properties {
+  min-height: 100vh;
+  min-width: 267px;
+  border: 1px solid black;
+}
+.title_and_buttons {
+  padding: 12px 10px;
+}
+.choosed_properties__title {
+  color: #000;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.choosed_properties__buttons {
+  margin-top: 10px;
+  display: flex;
+  width: 35%;
+  justify-content: space-between;
+}
+.choosed_properties__list {
+  border-top: 1px dashed black;
+  padding: 10px 10px 10px 0;
+}
+</style>

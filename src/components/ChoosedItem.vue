@@ -22,16 +22,24 @@ export default {
 .choosed__item {
   display: flex;
   width: fit-content;
-  margin: 5px 0;
+  align-items: center;
 }
 
 .choosed__item__img {
-  margin-right: 10px;
+  height: 20px;
+  margin-right: 4px;
+}
+
+.choosed__item__text {
+  padding: 4px 8px;
+  background-color: #cfcce2;
+  border-radius: 3px;
 }
 
 .arrows {
   margin-left: 10px;
-  width: 20px;
+  height: 20px;
+  width: 22px;
   display: flex;
   justify-content: space-between;
 }

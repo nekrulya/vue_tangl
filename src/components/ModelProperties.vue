@@ -110,6 +110,7 @@ export default {
           children: [],
         },
       ],
+      showAll: true,
     };
   },
 };
@@ -137,7 +138,7 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .properties {

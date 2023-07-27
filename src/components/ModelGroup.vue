@@ -9,13 +9,11 @@
         v-for="child in item.children"
         :key="child.id"
         :item="child"
-        :isVisible="isVisible"
       ></ModelGroup>
     </ul>
   </li>
   <ModelPropertiesItem
     v-if="!item.isGroup"
-    v-show="isVisible"
     :item="item.element"
   ></ModelPropertiesItem>
 </template>
@@ -24,7 +22,7 @@
 import ModelPropertiesItem from "./ModelPropertiesItem.vue";
 
 export default {
-  props: ["item", "isVisible"],
+  props: ["item", "showAll"],
   components: {
     ModelPropertiesItem,
   },
@@ -33,14 +31,20 @@ export default {
 
 <style scoped>
 .angle {
-  height: 30px;
+  height: 25px;
   position: relative;
-  top: -5px;
+  top: -3px;
 }
 .text_angle {
   display: flex;
   justify-content: space-between;
-
   max-width: fit-content;
+}
+.properties__list {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 </style>

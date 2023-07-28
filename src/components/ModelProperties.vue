@@ -5,7 +5,7 @@
       <div class="model_properties__hide">свернуть всё</div>
     </div>
     <div class="properties">
-      <PropertiesList :items="items"></PropertiesList>
+      <PropertiesList :items="items" :parentItem="parentItem"></PropertiesList>
     </div>
   </div>
 </template>
@@ -19,9 +19,11 @@ export default {
   },
   data() {
     return {
+      parentItem: "Root",
       items: [
         {
           isGroup: false,
+          parentItem: "Root",
           groupText: "",
           element: {
             isGroup: false,
@@ -34,34 +36,65 @@ export default {
         },
         {
           isGroup: true,
-          groupText: "Группа элементов",
+          parentItem: "Root",
+          groupText: "Группа элементов 1",
           element: {
             isGroup: true,
-            groupText: "Группа элементов",
-            element: {
-              text: "",
-              id: "",
-              name: "",
-            },
-            children: [],
+            parentItem: "Root",
+            groupText: "Группа элементов 1",
+            text: "Группа элементов 1",
+            id: "Группа элементов 1",
+            name: "Группа элементов 1",
           },
           children: [
             {
-              isGroup: true,
-              groupText: "Группа2 элементов",
+              isGroup: false,
+              parentItem: "Группа элементов 1",
+              groupText: "",
               element: {
-                text: "Высота",
-                id: "Высота",
-                name: "Высота",
+                isGroup: false,
+                groupText: "",
+                text: "Элемент 1",
+                id: "Элемент 1",
+                name: "Элемент 1",
+              },
+              children: [],
+            },
+            {
+              isGroup: true,
+              parentItem: "Группа элементов 1",
+              groupText: "Группа в группе",
+              element: {
+                isGroup: true,
+                groupText: "Группа в группе",
+                text: "Группа в группе",
+                id: "Группа в группе",
+                name: "Группа в группе",
               },
               children: [
                 {
                   isGroup: false,
+                  parentItem: "Группа в группе",
                   groupText: "",
                   element: {
-                    text: "Ширина2",
-                    id: "Ширина2",
-                    name: "Ширина2",
+                    isGroup: false,
+                    groupText: "",
+                    text: "Элемент 2",
+                    id: "Элемент 2",
+                    name: "Элемент 2",
+                  },
+                  children: [],
+                },
+                {
+                  isGroup: false,
+                  parentItem: "Группа в группе",
+                  groupText: "",
+                  element: {
+                    isGroup: false,
+                    groupText: "",
+                    text: "Элемент 3",
+                    id: "Элемент 3",
+                    name: "Элемент 3",
                   },
                   children: [],
                 },
@@ -69,21 +102,14 @@ export default {
             },
             {
               isGroup: false,
+              parentItem: "Группа элементов 1",
               groupText: "",
               element: {
-                text: "Ширина",
-                id: "Ширина",
-                name: "Ширина",
-              },
-              children: [],
-            },
-            {
-              isGroup: false,
-              groupText: "",
-              element: {
-                text: "Уровень",
-                id: "Уровень",
-                name: "Уровень",
+                isGroup: false,
+                groupText: "",
+                text: "Элемент 4",
+                id: "Элемент 4",
+                name: "Элемент 4",
               },
               children: [],
             },
@@ -91,26 +117,18 @@ export default {
         },
         {
           isGroup: false,
+          parentItem: "Root",
+          groupText: "",
           element: {
+            isGroup: false,
             groupText: "",
-            text: "Айди",
-            id: "Айди",
-            name: "Айди",
-          },
-          children: [],
-        },
-        {
-          isGroup: false,
-          element: {
-            groupText: "",
-            text: "Глубина",
-            id: "Глубина",
-            name: "Глубина",
+            text: "Элемент 5",
+            id: "Элемент 5",
+            name: "Элемент 5",
           },
           children: [],
         },
       ],
-      showAll: true,
     };
   },
 };

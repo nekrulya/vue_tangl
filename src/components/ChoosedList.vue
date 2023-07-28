@@ -1,19 +1,19 @@
 <template>
   <ul class="choosed_list">
-    <ChoosedGroup
+    <ChoosedListItem
       v-for="(choosedItem, index) in choosedItems"
       :key="index"
       :choosedItem="choosedItem"
-    ></ChoosedGroup>
+    ></ChoosedListItem>
   </ul>
 </template>
 
 <script>
-import ChoosedGroup from "./ChoosedGroup.vue";
+import ChoosedListItem from "./ChoosedListItem.vue";
 
 export default {
   components: {
-    ChoosedGroup,
+    ChoosedListItem,
   },
   props: ["choosedItems"],
   data() {

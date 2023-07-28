@@ -1,22 +1,23 @@
 <template>
   <ul class="properties__list">
-    <ModelGroup
+    <PropertiesListItem
       v-for="(item, index) in items"
       :key="index"
       :item="item"
-      :showAll="showAll"
-    ></ModelGroup>
+      :parentItem="parentItem"
+    >
+    </PropertiesListItem>
   </ul>
 </template>
 
 <script>
-import ModelGroup from "./ModelGroup.vue";
+import PropertiesListItem from "./PropertiesListItem.vue";
 
 export default {
   components: {
-    ModelGroup,
+    PropertiesListItem,
   },
-  props: ["items", "showAll"],
+  props: ["items", "parentItem"],
   data() {
     return {};
   },

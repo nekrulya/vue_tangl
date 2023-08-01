@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  props: ["item", "parentItem"],
+  props: ["item"],
   data() {
     return {};
   },

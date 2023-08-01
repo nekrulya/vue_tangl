@@ -1,5 +1,5 @@
 <template>
-  <Header :headerTitle="'Создание ведомости объемов работа'"></Header>
+  <Header></Header>
   <Main></Main>
 </template>
 

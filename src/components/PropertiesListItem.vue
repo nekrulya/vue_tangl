@@ -2,22 +2,23 @@
   <li v-if="item.isGroup" class="properties__item">
     <div class="text_angle">
       <span class="properties__item__text">{{ item.groupText }}</span>
-      <img class="angle" src="../assets/arrow-down.png" alt="open/close" />
+      <img
+        class="angle"
+        src="../assets/arrow-down.png"
+        alt="open/close"
+        @click="hide"
+      />
     </div>
     <ul class="properties__list">
       <PropertiesListItem
         v-for="child in item.children"
         :key="child.id"
         :item="child"
-        :parentItem="item.groupText"
       ></PropertiesListItem>
     </ul>
   </li>
   <li v-if="!item.isGroup" class="properties__item">
-    <ModelPropertiesItem
-      :item="item.element"
-      :parentItem="parentItem"
-    ></ModelPropertiesItem>
+    <ModelPropertiesItem :item="item.element"></ModelPropertiesItem>
   </li>
 </template>
 
@@ -25,10 +26,16 @@
 import ModelPropertiesItem from "./ModelPropertiesItem.vue";
 
 export default {
-  props: ["item", "parentItem"],
+  props: ["item"],
   components: { ModelPropertiesItem },
   data() {
     return {};
+  },
+  methods: {
+    hide(e) {
+      let ul = e.target.closest("li").querySelector("ul");
+      ul.hidden = !ul.hidden;
+    },
   },
 };
 </script>

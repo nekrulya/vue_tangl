@@ -4,7 +4,6 @@
       v-for="(item, index) in items"
       :key="index"
       :item="item"
-      :parentItem="parentItem"
     >
     </PropertiesListItem>
   </ul>
@@ -17,7 +16,7 @@ export default {
   components: {
     PropertiesListItem,
   },
-  props: ["items", "parentItem"],
+  props: ["items"],
   data() {
     return {};
   },

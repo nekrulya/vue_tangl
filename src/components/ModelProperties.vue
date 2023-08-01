@@ -5,7 +5,7 @@
       <div class="model_properties__hide">свернуть всё</div>
     </div>
     <div class="properties">
-      <PropertiesList :items="items" :parentItem="parentItem"></PropertiesList>
+      <PropertiesList :items="items"></PropertiesList>
     </div>
   </div>
 </template>
@@ -19,11 +19,9 @@ export default {
   },
   data() {
     return {
-      parentItem: "Root",
       items: [
         {
           isGroup: false,
-          parentItem: "Root",
           groupText: "",
           element: {
             isGroup: false,
@@ -36,11 +34,9 @@ export default {
         },
         {
           isGroup: true,
-          parentItem: "Root",
           groupText: "Группа элементов 1",
           element: {
             isGroup: true,
-            parentItem: "Root",
             groupText: "Группа элементов 1",
             text: "Группа элементов 1",
             id: "Группа элементов 1",
@@ -49,7 +45,6 @@ export default {
           children: [
             {
               isGroup: false,
-              parentItem: "Группа элементов 1",
               groupText: "",
               element: {
                 isGroup: false,
@@ -62,7 +57,6 @@ export default {
             },
             {
               isGroup: true,
-              parentItem: "Группа элементов 1",
               groupText: "Группа в группе",
               element: {
                 isGroup: true,
@@ -74,7 +68,6 @@ export default {
               children: [
                 {
                   isGroup: false,
-                  parentItem: "Группа в группе",
                   groupText: "",
                   element: {
                     isGroup: false,
@@ -87,7 +80,6 @@ export default {
                 },
                 {
                   isGroup: false,
-                  parentItem: "Группа в группе",
                   groupText: "",
                   element: {
                     isGroup: false,
@@ -102,7 +94,6 @@ export default {
             },
             {
               isGroup: false,
-              parentItem: "Группа элементов 1",
               groupText: "",
               element: {
                 isGroup: false,
@@ -117,7 +108,6 @@ export default {
         },
         {
           isGroup: false,
-          parentItem: "Root",
           groupText: "",
           element: {
             isGroup: false,

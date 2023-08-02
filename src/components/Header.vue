@@ -18,7 +18,14 @@
       </button>
     </form>
     <div class="logout" v-if="isLoggedIn">
+      <ModalDialog
+        v-model:showModal="dialogVisible"
+        :companies="companies"
+      ></ModalDialog>
       <span>{{ login }}</span>
+      <button @click.prevent="this.dialogVisible = true" class="open_modal">
+        Настроить
+      </button>
       <button @click.prevent="logOut">Выйти</button>
     </div>
   </header>
@@ -26,22 +33,25 @@
 
 <script>
 import axios from "axios";
+import ModalDialog from "./ModalDialog.vue";
 
 export default {
   props: ["headerTitle"],
+  components: {
+    ModalDialog,
+  },
   data() {
     return {
       login: "",
       password: "",
       isLoggedIn: false,
+      companies: [],
+      dialogVisible: false,
+      accessToken: "",
     };
   },
   methods: {
-    updateLogInfo() {
-      this.password = "";
-      this.isLoggedIn = localStorage.getItem("isLoggedIn");
-    },
-    loginTangle() {
+    async loginTangle() {
       axios({
         method: "post",
         url: "https://auth.tangl.cloud/connect/token",
@@ -54,22 +64,42 @@ export default {
         },
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
-        .then(function (response) {
-          console.log("Ответ сервера успешно получен!");
-          console.log(response.data);
+        .then((response) => {
           localStorage.setItem("isLoggedIn", true);
-          localStorage.setItem("access_token", response.data.access_token);
+          localStorage.setItem("accessToken", response.data.access_token);
+          this.password = "";
+          this.isLoggedIn = localStorage.getItem("isLoggedIn");
+          let accessToken = response.data.access_token;
+          this.updateCompanies(accessToken);
         })
         .catch(function (error) {
           console.log(error);
         });
-      this.updateLogInfo();
     },
     logOut() {
       this.login = "";
       localStorage.setItem("isLoggedIn", false);
       this.isLoggedIn = false;
-      localStorage.setItem("access_token", "");
+      localStorage.setItem("accessToken", "");
+    },
+    updateCompanies(accessToken) {
+      axios({
+        method: "get",
+        url: "https://auth.tangl.cloud/api/app/company",
+        params: {},
+        data: {},
+        headers: {
+          "Content-Type": "text/plain",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => {
+          this.companies = response.data;
+          this.accessToken = accessToken;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
@@ -114,8 +144,9 @@ export default {
 
 .logout {
   font-size: 18px;
-}
-.logout span {
-  margin-right: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 15px;
 }
 </style>

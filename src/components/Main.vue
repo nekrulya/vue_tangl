@@ -20,7 +20,9 @@ export default {
     FinalTable,
   },
   data() {
-    return {};
+    return {
+      dialogVisible: false,
+    };
   },
 };
 </script>

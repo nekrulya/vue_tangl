@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" v-if="showModal" @click.stop="hideDialog">
+  <div class="dialog" v-if="showModal" @click="hideDialog">
     <div @click.stop class="dialog__content">
       <select class="companies" @change="updateProjects">
         <option disabled selected>Выберите компанию</option>
@@ -21,12 +21,32 @@
           {{ project.name }}
         </option>
       </select>
-      <select class="companies">
+      <select class="companies" @change="updateData">
         <option disabled selected>Выберите модель</option>
         <option v-for="model in models" :key="model.id" :value="model.id">
           {{ model.name }}
         </option>
       </select>
+      <select class="companies" @change="updatePositions">
+        <option disabled selected>Выберите модель</option>
+        <option v-for="md in modelsData" :key="md.id" :value="md.id">
+          {{ md.name }}
+        </option>
+      </select>
+      <!-- <ul class="modelsData">
+        <li v-for="md in modelsData" :key="md.id" :value="md.id">
+          {{ md.name }}
+          <ul>
+            <li
+              v-for="pos in md.catalogPriorities"
+              :key="pos.id"
+              @click="updatePositions"
+            >
+              <span class="tree">{{ pos.name }}</span>
+            </li>
+          </ul>
+        </li>
+      </ul> -->
     </div>
   </div>
 </template>
@@ -41,13 +61,23 @@ export default {
       accessToken: localStorage.getItem("accessToken"),
       projects: [],
       models: [],
+      modelsData: [],
+      positions: [],
+      odata: [],
     };
   },
   methods: {
+    // скрыть модальное окно
     hideDialog() {
       this.$emit("update:showModal", false);
     },
+
+    // получить список проектов
     updateProjects(e) {
+      localStorage.setItem(
+        "choosedCompany",
+        this.companies[e.target.selectedIndex - 1].name
+      );
       axios({
         method: "get",
         url: `https://value.tangl.cloud/api/app/project/${e.target.value}/byCompanyId`,
@@ -59,18 +89,100 @@ export default {
         },
       })
         .then((response) => {
-          console.log("Ответ сервера успешно получен!");
-          console.log(response.data);
           this.projects = response.data;
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    // получить список моделей
     updateModels(e) {
-      console.log(this.projects[e.target.selectedIndex - 1].folders[0].models);
       this.models = this.projects[e.target.selectedIndex - 1].folders[0].models;
+      localStorage.setItem(
+        "choosedProject",
+        this.projects[e.target.selectedIndex - 1].name
+      );
     },
+
+    // получить список классификаторов
+    updateData(e) {
+      localStorage.setItem(
+        "choosedModel",
+        this.models[e.target.selectedIndex - 1].name
+      );
+      localStorage.setItem(
+        "choosedModelId",
+        this.models[e.target.selectedIndex - 1].id
+      );
+      axios({
+        method: "get",
+        url: `https://value.tangl.cloud/api/app/analysis/${e.target.value}/byModel`,
+        params: {},
+        data: {},
+        headers: {
+          "Content-Type": "text/plain",
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      })
+        .then((response) => {
+          this.modelsData = response.data.catalogPrioritiesSchemes;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    // получить odata
+    updatePositions(e) {
+      localStorage.setItem(
+        "choosedPos",
+        this.modelsData[e.target.selectedIndex - 1].name
+      );
+
+      axios({
+        method: "get",
+        url: `https://value.tangl.cloud/api/odata/UnionTree('${localStorage.getItem(
+          "choosedCompany"
+        )}','${localStorage.getItem("choosedProject")}','${localStorage.getItem(
+          "choosedModel"
+        )}','${localStorage.getItem("choosedPos")}')?parents=true`,
+        params: {},
+        data: {},
+        headers: {
+          "Content-Type": "text/plain;charset=UTF-8",
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      })
+        .then((response) => {
+          this.odata = response.data.catalogPrioritiesSchemes;
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      axios({
+        method: "get",
+        url: `https://cache.tangl.cloud/api/app/modelsCache/${localStorage.getItem(
+          "choosedModelId"
+        )}/tree`,
+        params: {},
+        data: {},
+        headers: {
+          "Content-Type": "text/plain",
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    getTree(e) {},
   },
 };
 </script>
@@ -103,5 +215,20 @@ export default {
   border-radius: 5px;
   padding: 5px;
   margin-right: 5px;
+}
+
+.modelsData {
+  color: #000;
+}
+
+.tree {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tree:hover {
+  padding: 5px;
+  outline: 2px solid teal;
+  transition: all 0.2s ease;
 }
 </style>

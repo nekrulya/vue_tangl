@@ -51,6 +51,7 @@ export default {
     };
   },
   methods: {
+    // войти в аккаунт
     async loginTangle() {
       axios({
         method: "post",
@@ -76,12 +77,14 @@ export default {
           console.log(error);
         });
     },
+    // выйти из аккаунта
     logOut() {
       this.login = "";
       localStorage.setItem("isLoggedIn", false);
       this.isLoggedIn = false;
       localStorage.setItem("accessToken", "");
     },
+    // получить список компаний
     updateCompanies(accessToken) {
       axios({
         method: "get",

@@ -26,7 +26,6 @@
 
 <script>
 import ChoosedItem from "./ChoosedItem.vue";
-import ChoosedListItem from "./ChoosedListItem.vue";
 
 export default {
   data() {
@@ -35,7 +34,6 @@ export default {
   props: ["choosedItem"],
   components: {
     ChoosedItem,
-    ChoosedListItem,
   },
 };
 </script>
@@ -47,9 +45,19 @@ export default {
   position: relative;
   left: -4px;
 }
+.choosed__group:hover {
+  transform: scale(1.05);
+  transition: 0.1s;
+  cursor: pointer;
+}
 .cont {
   display: flex;
   align-items: center;
+}
+.choosed__item:hover {
+  transform: scale(1.05);
+  transition: 0.1s;
+  cursor: pointer;
 }
 .choosed__item__img {
   height: 20px;

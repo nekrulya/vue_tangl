@@ -1,10 +1,6 @@
 <template>
   <ul class="properties__list">
-    <PropertiesListItem
-      v-for="(item, index) in items"
-      :key="index"
-      :item="item"
-    >
+    <PropertiesListItem v-for="item in items" :key="item.key" :item="item">
     </PropertiesListItem>
   </ul>
 </template>
@@ -20,5 +16,6 @@ export default {
   data() {
     return {};
   },
+  methods: {},
 };
 </script>

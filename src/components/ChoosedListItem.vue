@@ -1,5 +1,5 @@
 <template>
-  <li v-if="choosedItem.isGroup" class="choosed__group">
+  <!-- <li v-if="choosedItem.isGroup" class="choosed__group">
     <div class="cont">
       <img class="choosed__item__img" src="../assets/delete.png" alt="delete" />
       <span class="choosed__item__text">{{ choosedItem.groupText }}</span>
@@ -10,17 +10,14 @@
     </div>
     <ul class="choosed_list">
       <ChoosedListItem
-        v-for="child in choosedItem.children"
+        v-for="child in choosedItem"
         :key="child.id"
         :choosedItem="child"
       ></ChoosedListItem>
     </ul>
-  </li>
-  <li v-if="!choosedItem.isGroup" class="choosed__item">
-    <ChoosedItem
-      v-if="!choosedItem.isGroup"
-      :choosedItem="choosedItem.element"
-    ></ChoosedItem>
+  </li> -->
+  <li class="choosed__item">
+    <ChoosedItem :choosedItem="choosedItem"></ChoosedItem>
   </li>
 </template>
 

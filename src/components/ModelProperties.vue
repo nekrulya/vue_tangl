@@ -1,11 +1,12 @@
 <template>
-  <div class="model_properties">
+  <div class="model_properties" @change="choosePropety">
     <div class="title_and_hide">
       <div class="model_properties__title">Свойства в модели</div>
       <div class="model_properties__hide">свернуть всё</div>
     </div>
     <div class="properties">
-      <PropertiesList :items="items"></PropertiesList>
+      <!-- <pre>{{ Object.entries(properties) }}</pre> -->
+      <PropertiesList :items="Object.entries(properties)"></PropertiesList>
     </div>
   </div>
 </template>
@@ -17,6 +18,7 @@ export default {
   components: {
     PropertiesList,
   },
+  props: ["properties"],
   data() {
     return {
       items: [
@@ -121,13 +123,20 @@ export default {
       ],
     };
   },
+  methods: {
+    choosePropety(e) {
+      console.log(e.target.value);
+      this.$emit("choosePropety", e.target.value);
+    },
+  },
 };
 </script>
 
 <style scoped>
 .model_properties {
-  min-height: 100vh;
-  min-width: 267px;
+  height: 100vh;
+  min-width: 400px;
+  width: max-content;
   border: 1px solid black;
 }
 .title_and_hide {
@@ -152,5 +161,8 @@ export default {
 .properties {
   border-top: 1px dashed black;
   padding: 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: calc(100vh - 85px);
 }
 </style>

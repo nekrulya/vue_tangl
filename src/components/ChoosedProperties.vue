@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="choosed_properties__list">
-      <ChoosedList :choosedItems="choosedItems"></ChoosedList>
+      <ChoosedList :choosedItems="choosedProperties"></ChoosedList>
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@ export default {
   components: {
     ChoosedList,
   },
+  props: ["choosedProperties"],
   data() {
     return {
       choosedItems: [

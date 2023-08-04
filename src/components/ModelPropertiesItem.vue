@@ -1,7 +1,7 @@
 <template>
   <label :for="item.id">
-    <input type="checkbox" :name="item.name" :id="item.id" />
-    {{ item.text }}
+    <input type="checkbox" :name="item" :id="item" :value="item" />
+    {{ item }}
   </label>
 </template>
 
@@ -11,5 +11,6 @@ export default {
   data() {
     return {};
   },
+  methods: {},
 };
 </script>

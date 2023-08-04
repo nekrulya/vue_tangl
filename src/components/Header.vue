@@ -21,6 +21,7 @@
       <ModalDialog
         v-model:showModal="dialogVisible"
         :companies="companies"
+        @getProperties="propetiesToApp"
       ></ModalDialog>
       <span>{{ login }}</span>
       <button @click.prevent="this.dialogVisible = true" class="open_modal">
@@ -103,6 +104,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    propetiesToApp(someData) {
+      this.$emit("getProperties", someData);
     },
   },
 };

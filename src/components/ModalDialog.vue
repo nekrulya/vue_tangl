@@ -33,20 +33,11 @@
           {{ md.name }}
         </option>
       </select>
-      <!-- <ul class="modelsData">
-        <li v-for="md in modelsData" :key="md.id" :value="md.id">
-          {{ md.name }}
-          <ul>
-            <li
-              v-for="pos in md.catalogPriorities"
-              :key="pos.id"
-              @click="updatePositions"
-            >
-              <span class="tree">{{ pos.name }}</span>
-            </li>
-          </ul>
+      <ul class="metaTree">
+        <li v-for="el in metaTree" :key="el.name" @click="getParams">
+          {{ el.name }}
         </li>
-      </ul> -->
+      </ul>
     </div>
   </div>
 </template>
@@ -64,6 +55,9 @@ export default {
       modelsData: [],
       positions: [],
       odata: [],
+      metaTree: [],
+      choosedMetaTree: [],
+      params: [],
     };
   },
   methods: {
@@ -176,13 +170,42 @@ export default {
       })
         .then((response) => {
           console.log(response);
+          this.metaTree = response.data.metaTree;
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    getTree(e) {},
+    getParams(e) {
+      this.choosedMetaTree = this.metaTree.filter(
+        (element) => element.name == e.target.textContent
+      );
+      console.log(this.choosedMetaTree[0].typeGroups[0].elements[0].elNum);
+      axios({
+        method: "get",
+        url: `https://cache.tangl.cloud/api/app/modelsCache/${localStorage.getItem(
+          "choosedModelId"
+        )}?elNum=${this.choosedMetaTree[0].typeGroups[0].elements[0].elNum}`,
+        params: {},
+        data: {},
+        headers: {
+          "Content-Type": "text/plain",
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      })
+        .then((response) => {
+          try {
+            this.params = JSON.parse(response.data.meta);
+          } catch (e) {
+            console.log(e);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$emit("getProperties", this.params);
+    },
   },
 };
 </script>
@@ -217,7 +240,7 @@ export default {
   margin-right: 5px;
 }
 
-.modelsData {
+.metaTree {
   color: #000;
 }
 

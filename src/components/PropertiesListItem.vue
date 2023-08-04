@@ -1,7 +1,7 @@
 <template>
-  <li v-if="item.isGroup" class="properties__item">
+  <li v-if="typeof item[1] === 'object'" class="properties__item">
     <div class="text_angle">
-      <span class="properties__item__text">{{ item.groupText }}</span>
+      <span class="properties__item__text">{{ item[0] }}</span>
       <img
         class="angle"
         src="../assets/arrow-down.png"
@@ -11,14 +11,14 @@
     </div>
     <ul class="properties__list">
       <PropertiesListItem
-        v-for="child in item.children"
-        :key="child.id"
-        :item="child"
+        v-for="item in Object.entries(item[1])"
+        :key="item[0]"
+        :item="item"
       ></PropertiesListItem>
     </ul>
   </li>
-  <li v-if="!item.isGroup" class="properties__item">
-    <ModelPropertiesItem :item="item.element"></ModelPropertiesItem>
+  <li v-if="!(typeof item[1] === 'object')" class="properties__item">
+    <ModelPropertiesItem :item="item[0]"></ModelPropertiesItem>
   </li>
 </template>
 

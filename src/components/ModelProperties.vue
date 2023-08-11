@@ -6,7 +6,7 @@
     </div>
     <div class="properties">
       <!-- <pre>{{ Object.entries(properties) }}</pre> -->
-      <PropertiesList :items="Object.entries(properties)"></PropertiesList>
+      <!-- <PropertiesList :items="Object.entries(properties)"></PropertiesList> -->
     </div>
   </div>
 </template>
@@ -126,7 +126,6 @@ export default {
   methods: {
     choosePropety(e) {
       console.log(e.target.value);
-      this.$emit("choosePropety", e.target.value);
     },
   },
 };

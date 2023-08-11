@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" v-if="showModal" @click="hideDialog">
+  <div class="dialog" v-if="dialogVisible" @click="hideDialog">
     <div @click.stop class="dialog__content">
       <select class="companies" @change="updateProjects">
         <option disabled selected>Выберите компанию</option>
@@ -44,34 +44,56 @@
 
 <script>
 import axios from "axios";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  props: ["showModal", "companies"],
+  props: [],
   data() {
-    return {
-      accessToken: localStorage.getItem("accessToken"),
-      projects: [],
-      models: [],
-      modelsData: [],
-      positions: [],
-      odata: [],
-      metaTree: [],
-      choosedMetaTree: [],
-      params: [],
-    };
+    return {};
+  },
+  computed: {
+    ...mapState({
+      isAuth: (state) => state.isAuth,
+      companies: (state) => state.companies,
+      choosedCompany: (state) => state.choosedCompany,
+      accessToken: (state) => state.accessToken,
+      dialogVisible: (state) => state.dialogVisible,
+      projects: (state) => state.projects,
+      choosedProject: (state) => state.choosedPropject,
+      models: (state) => state.models,
+      modelsData: (state) => state.modelsData,
+      positions: (state) => state.positions,
+      odata: (state) => state.odata,
+      metaTree: (state) => state.metaTree,
+      choosedMetaTree: (state) => state.choosedMetaTree,
+      params: (state) => state.params,
+    }),
   },
   methods: {
+    ...mapMutations({
+      setAccessToken: "setAccessToken",
+      setIsAyth: "setIsAuth",
+      setCompanies: "setCompanies",
+      setChoosedCompany: "setChoosedCompany",
+      setDialogVisible: "setDialogVisible",
+      setProjects: "setProjects",
+      setChoosedProject: "setChoosedPropject",
+      setModels: "setModels",
+      setModelsData: "setModelsData",
+      setPositions: "setPositions",
+      setOdata: "setOdata",
+      setMetaTree: "setMetaTree",
+      setChoosedMetaTree: "setChoosedMetaTree",
+      setParams: "setParams",
+    }),
     // скрыть модальное окно
     hideDialog() {
-      this.$emit("update:showModal", false);
+      this.setDialogVisible(false);
     },
 
     // получить список проектов
     updateProjects(e) {
-      localStorage.setItem(
-        "choosedCompany",
-        this.companies[e.target.selectedIndex - 1].name
-      );
+      this.setChoosedCompany(this.companies[e.target.selectedIndex - 1].name);
       axios({
         method: "get",
         url: `https://value.tangl.cloud/api/app/project/${e.target.value}/byCompanyId`,
@@ -83,7 +105,7 @@ export default {
         },
       })
         .then((response) => {
-          this.projects = response.data;
+          this.setProjects(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -92,7 +114,10 @@ export default {
 
     // получить список моделей
     updateModels(e) {
-      this.models = this.projects[e.target.selectedIndex - 1].folders[0].models;
+      this.setModels(
+        this.projects[e.target.selectedIndex - 1].folders[0].models
+      );
+      this.setChoosedProject();
       localStorage.setItem(
         "choosedProject",
         this.projects[e.target.selectedIndex - 1].name

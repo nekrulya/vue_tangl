@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header__title">Создание ведомости объемов работ</div>
-    <form class="header__form" v-if="!isLoggedIn">
+    <form class="header__form" v-if="!isAuth">
       <label>
         Login
         <input class="header__login" type="text" v-model="login" />
@@ -17,16 +17,9 @@
         Войти
       </button>
     </form>
-    <div class="logout" v-if="isLoggedIn">
-      <ModalDialog
-        v-model:showModal="dialogVisible"
-        :companies="companies"
-        @getProperties="propetiesToApp"
-      ></ModalDialog>
+    <div class="logout" v-if="isAuth">
       <span>{{ login }}</span>
-      <button @click.prevent="this.dialogVisible = true" class="open_modal">
-        Настроить
-      </button>
+      <button @click.prevent="openModal" class="open_modal">Настроить</button>
       <button @click.prevent="logOut">Выйти</button>
     </div>
   </header>
@@ -34,24 +27,31 @@
 
 <script>
 import axios from "axios";
-import ModalDialog from "./ModalDialog.vue";
-
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
-  props: ["headerTitle"],
-  components: {
-    ModalDialog,
-  },
+  props: [],
+  components: {},
   data() {
     return {
       login: "",
       password: "",
-      isLoggedIn: false,
-      companies: [],
-      dialogVisible: false,
-      accessToken: "",
     };
   },
+  computed: {
+    ...mapState({
+      isAuth: (state) => state.isAuth,
+      companies: (state) => state.companies,
+      accessToken: (state) => state.accessToken,
+      dialogVisible: (state) => state.dialogVisible,
+    }),
+  },
   methods: {
+    ...mapMutations({
+      setAccessToken: "setAccessToken",
+      setIsAyth: "setIsAuth",
+      setCompanies: "setCompanies",
+      setDialogVisible: "setDialogVisible",
+    }),
     // войти в аккаунт
     async loginTangle() {
       axios({
@@ -67,12 +67,10 @@ export default {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
         .then((response) => {
-          localStorage.setItem("isLoggedIn", true);
-          localStorage.setItem("accessToken", response.data.access_token);
           this.password = "";
-          this.isLoggedIn = localStorage.getItem("isLoggedIn");
-          let accessToken = response.data.access_token;
-          this.updateCompanies(accessToken);
+          this.setAccessToken(response.data.access_token);
+          this.setIsAyth(true);
+          this.updateCompanies(this.accessToken);
         })
         .catch(function (error) {
           console.log(error);
@@ -81,9 +79,12 @@ export default {
     // выйти из аккаунта
     logOut() {
       this.login = "";
-      localStorage.setItem("isLoggedIn", false);
-      this.isLoggedIn = false;
-      localStorage.setItem("accessToken", "");
+      this.setAccessToken("");
+      this.setIsAyth(false);
+    },
+    // открыть модальное окно выбора
+    openModal() {
+      this.setDialogVisible(true);
     },
     // получить список компаний
     updateCompanies(accessToken) {
@@ -98,15 +99,11 @@ export default {
         },
       })
         .then((response) => {
-          this.companies = response.data;
-          this.accessToken = accessToken;
+          this.setCompanies(response.data);
         })
         .catch((error) => {
           console.log(error);
         });
-    },
-    propetiesToApp(someData) {
-      this.$emit("getProperties", someData);
     },
   },
 };

@@ -1,31 +1,29 @@
 <template>
-  <Header @getProperties="getProperties"></Header>
-  <Main :properties="properties"></Main>
+  <Header></Header>
+  <ModalDialog></ModalDialog>
+  <Main></Main>
 </template>
 
 <script>
-import Header from "./components/Header.vue";
-import Main from "./components/Main.vue";
+import Header from "@/components/Header.vue";
+import ModalDialog from "@/components/ModalDialog.vue";
+import Main from "@/components/Main.vue";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
     Header,
+    ModalDialog,
     Main,
   },
   data() {
-    return {
-      properties: [],
-    };
+    return {};
   },
-  methods: {
-    getProperties(someData) {
-      this.properties = someData;
-      try {
-        console.log(this.properties);
-      } catch (e) {
-        console.log(e);
-      }
-    },
+  methods: {},
+  computed: {
+    ...mapState({
+      dialogVisible: (state) => state.dialogVisible,
+    }),
   },
 };
 </script>

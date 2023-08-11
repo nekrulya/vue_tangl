@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import ModelProperties from "./ModelProperties.vue";
-import ChoosedProperties from "./ChoosedProperties.vue";
-import FinalTable from "./FinalTable.vue";
+import ModelProperties from "@/components/ModelProperties.vue";
+import ChoosedProperties from "@/components/ChoosedProperties.vue";
+import FinalTable from "@/components/FinalTable.vue";
 
 export default {
   props: ["properties"],
@@ -27,13 +27,16 @@ export default {
   },
   data() {
     return {
-      dialogVisible: false,
       choosedProperties: [],
     };
   },
   methods: {
     addChooseProperty(item) {
       this.choosedProperties.push(item);
+    },
+
+    propetiesToApp(someData) {
+      this.$emit("getProperties", someData);
     },
   },
 };

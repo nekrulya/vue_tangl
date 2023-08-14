@@ -11,12 +11,16 @@ export default createStore({
     projects: [],
     choosedProject: "",
     models: [],
+    choosedModel: "",
+    choosedModelId: "",
     modelsData: [],
     positions: [],
+    choosedPosition: "",
     odata: [],
     metaTree: [],
     choosedMetaTree: [],
     params: [],
+    choosedProperties: new Set(),
   },
   getters: {},
   mutations: {
@@ -47,11 +51,20 @@ export default createStore({
     setModels(state, models) {
       state.models = models;
     },
+    setChoosedModel(state, choosedModel) {
+      state.choosedModel = choosedModel;
+    },
+    setChoosedModelId(state, choosedModelId) {
+      state.choosedModelId = choosedModelId;
+    },
     setModelsData(state, modelsData) {
       state.modelsData = modelsData;
     },
-    setPositionss(state, positions) {
+    setPositions(state, positions) {
       state.positions = positions;
+    },
+    setChoosedPosition(state, choosedPosition) {
+      state.choosedPosition = choosedPosition;
     },
     setOdata(state, odata) {
       state.odata = odata;
@@ -64,6 +77,15 @@ export default createStore({
     },
     setParams(state, params) {
       state.params = params;
+    },
+    setChoosedProperties(state, choosedProperties) {
+      state.choosedProperties = choosedProperties;
+    },
+    addChoosedProperty(state, choosedProperty) {
+      state.choosedProperties.add(choosedProperty);
+    },
+    deleteChoosedProperty(state, choosedProperty) {
+      state.choosedProperties.delete(choosedProperty);
     },
   },
   actions: {},

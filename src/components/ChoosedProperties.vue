@@ -3,7 +3,7 @@
     <div class="title_and_buttons">
       <div class="choosed_properties__title">Свойства в таблице</div>
       <div class="choosed_properties__buttons">
-        <img src="../assets/group.png" alt="group" />
+        <img src="../assets/group.png" alt="group" @click="addGroup" />
         <img src="../assets/func.png" alt="func" />
         <img src="../assets/saved.png" alt="saved" />
       </div>
@@ -16,73 +16,29 @@
 
 <script>
 import ChoosedList from "./ChoosedList.vue";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
     ChoosedList,
   },
-  props: ["choosedProperties"],
+  computed: {
+    ...mapState({
+      choosedProperties: (state) => state.choosedProperties,
+    }),
+  },
+  props: [],
   data() {
-    return {
-      choosedItems: [
-        {
-          isGroup: false,
-          groupText: "",
-          element: {
-            isGroup: false,
-            groupText: "",
-            text: "Наименование",
-            id: 1,
-          },
-          children: [],
-        },
-        {
-          isGroup: true,
-          groupText: "Размеры",
-          element: {
-            isGroup: false,
-            groupText: "",
-            text: "Размеры",
-            id: 2,
-          },
-          children: [
-            {
-              isGroup: false,
-              groupText: "",
-              element: {
-                isGroup: false,
-                groupText: "",
-                text: "Высота",
-                id: 3,
-              },
-              children: [],
-            },
-            {
-              isGroup: false,
-              groupText: "",
-              element: {
-                isGroup: false,
-                groupText: "",
-                text: "Ширина",
-                id: 3,
-              },
-              children: [],
-            },
-          ],
-        },
-        {
-          isGroup: false,
-          groupText: "",
-          element: {
-            isGroup: false,
-            groupText: "",
-            text: "Общее количество",
-            id: 4,
-          },
-          children: [],
-        },
-      ],
-    };
+    return {};
+  },
+  methods: {
+    ...mapMutations({
+      addChoosedProperty: "addChoosedProperty",
+      deleteChoosedProperty: "deleteChoosedProperty",
+    }),
+    addGroup() {
+      this.addChoosedProperty({ "без названия": ["1", "2", "3"] });
+    },
   },
 };
 </script>

@@ -5,18 +5,41 @@
       <div class="model_properties__hide">свернуть всё</div>
     </div>
     <div class="properties">
-      <!-- <pre>{{ Object.entries(properties) }}</pre> -->
-      <!-- <PropertiesList :items="Object.entries(properties)"></PropertiesList> -->
+      <!-- <pre>{{ Object.entries(this.params) }}</pre> -->
+      <PropertiesList :items="Object.entries(this.params)"></PropertiesList>
     </div>
   </div>
 </template>
 
 <script>
 import PropertiesList from "./PropertiesList.vue";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
     PropertiesList,
+  },
+  computed: {
+    ...mapState({
+      isAuth: (state) => state.isAuth,
+      companies: (state) => state.companies,
+      choosedCompany: (state) => state.choosedCompany,
+      accessToken: (state) => state.accessToken,
+      dialogVisible: (state) => state.dialogVisible,
+      projects: (state) => state.projects,
+      choosedProject: (state) => state.choosedProject,
+      models: (state) => state.models,
+      choosedModel: (state) => state.choosedModel,
+      choosedModelId: (state) => state.choosedModelId,
+      modelsData: (state) => state.modelsData,
+      positions: (state) => state.positions,
+      choosedPosition: (state) => state.choosedPosition,
+      odata: (state) => state.odata,
+      metaTree: (state) => state.metaTree,
+      choosedMetaTree: (state) => state.choosedMetaTree,
+      params: (state) => state.params,
+      choosedProperties: (state) => state.choosedProperties,
+    }),
   },
   props: ["properties"],
   data() {
@@ -124,8 +147,14 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({
+      addChoosedProperty: "addChoosedProperty",
+      deleteChoosedProperty: "deleteChoosedProperty",
+    }),
     choosePropety(e) {
-      console.log(e.target.value);
+      e.target.checked
+        ? this.addChoosedProperty(e.target.value)
+        : this.deleteChoosedProperty(e.target.value);
     },
   },
 };

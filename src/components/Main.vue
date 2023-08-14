@@ -26,17 +26,11 @@ export default {
     FinalTable,
   },
   data() {
-    return {
-      choosedProperties: [],
-    };
+    return {};
   },
   methods: {
     addChooseProperty(item) {
       this.choosedProperties.push(item);
-    },
-
-    propetiesToApp(someData) {
-      this.$emit("getProperties", someData);
     },
   },
 };

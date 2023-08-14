@@ -59,10 +59,13 @@ export default {
       accessToken: (state) => state.accessToken,
       dialogVisible: (state) => state.dialogVisible,
       projects: (state) => state.projects,
-      choosedProject: (state) => state.choosedPropject,
+      choosedProject: (state) => state.choosedProject,
       models: (state) => state.models,
+      choosedModel: (state) => state.choosedModel,
+      choosedModelId: (state) => state.choosedModelId,
       modelsData: (state) => state.modelsData,
       positions: (state) => state.positions,
+      choosedPosition: (state) => state.choosedPosition,
       odata: (state) => state.odata,
       metaTree: (state) => state.metaTree,
       choosedMetaTree: (state) => state.choosedMetaTree,
@@ -77,10 +80,13 @@ export default {
       setChoosedCompany: "setChoosedCompany",
       setDialogVisible: "setDialogVisible",
       setProjects: "setProjects",
-      setChoosedProject: "setChoosedPropject",
+      setChoosedProject: "setChoosedProject",
       setModels: "setModels",
+      setChoosedModel: "setChoosedModel",
+      setChoosedModelId: "setChoosedModelId",
       setModelsData: "setModelsData",
       setPositions: "setPositions",
+      setChoosedPosition: "setChoosedPosition",
       setOdata: "setOdata",
       setMetaTree: "setMetaTree",
       setChoosedMetaTree: "setChoosedMetaTree",
@@ -117,23 +123,13 @@ export default {
       this.setModels(
         this.projects[e.target.selectedIndex - 1].folders[0].models
       );
-      this.setChoosedProject();
-      localStorage.setItem(
-        "choosedProject",
-        this.projects[e.target.selectedIndex - 1].name
-      );
+      this.setChoosedProject(this.projects[e.target.selectedIndex - 1].name);
     },
 
     // получить список классификаторов
     updateData(e) {
-      localStorage.setItem(
-        "choosedModel",
-        this.models[e.target.selectedIndex - 1].name
-      );
-      localStorage.setItem(
-        "choosedModelId",
-        this.models[e.target.selectedIndex - 1].id
-      );
+      this.setChoosedModel(this.models[e.target.selectedIndex - 1].name);
+      this.setChoosedModelId(this.models[e.target.selectedIndex - 1].id);
       axios({
         method: "get",
         url: `https://value.tangl.cloud/api/app/analysis/${e.target.value}/byModel`,
@@ -145,7 +141,7 @@ export default {
         },
       })
         .then((response) => {
-          this.modelsData = response.data.catalogPrioritiesSchemes;
+          this.setModelsData(response.data.catalogPrioritiesSchemes);
         })
         .catch((error) => {
           console.log(error);
@@ -154,18 +150,10 @@ export default {
 
     // получить odata
     updatePositions(e) {
-      localStorage.setItem(
-        "choosedPos",
-        this.modelsData[e.target.selectedIndex - 1].name
-      );
-
+      this.setChoosedPosition(this.modelsData[e.target.selectedIndex - 1].name);
       axios({
         method: "get",
-        url: `https://value.tangl.cloud/api/odata/UnionTree('${localStorage.getItem(
-          "choosedCompany"
-        )}','${localStorage.getItem("choosedProject")}','${localStorage.getItem(
-          "choosedModel"
-        )}','${localStorage.getItem("choosedPos")}')?parents=true`,
+        url: `https://value.tangl.cloud/api/odata/UnionTree('${this.choosedCompany}','${this.choosedProject}','${this.choosedModel}','${this.choosedPosition}')?parents=true`,
         params: {},
         data: {},
         headers: {
@@ -174,8 +162,7 @@ export default {
         },
       })
         .then((response) => {
-          this.odata = response.data.catalogPrioritiesSchemes;
-          console.log(response);
+          this.setOdata(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -183,9 +170,7 @@ export default {
 
       axios({
         method: "get",
-        url: `https://cache.tangl.cloud/api/app/modelsCache/${localStorage.getItem(
-          "choosedModelId"
-        )}/tree`,
+        url: `https://cache.tangl.cloud/api/app/modelsCache/${this.choosedModelId}/tree`,
         params: {},
         data: {},
         headers: {
@@ -194,8 +179,7 @@ export default {
         },
       })
         .then((response) => {
-          console.log(response);
-          this.metaTree = response.data.metaTree;
+          this.setMetaTree(response.data.metaTree);
         })
         .catch((error) => {
           console.log(error);
@@ -203,15 +187,12 @@ export default {
     },
 
     getParams(e) {
-      this.choosedMetaTree = this.metaTree.filter(
-        (element) => element.name == e.target.textContent
+      this.setChoosedMetaTree(
+        this.metaTree.filter((element) => element.name == e.target.textContent)
       );
-      console.log(this.choosedMetaTree[0].typeGroups[0].elements[0].elNum);
       axios({
         method: "get",
-        url: `https://cache.tangl.cloud/api/app/modelsCache/${localStorage.getItem(
-          "choosedModelId"
-        )}?elNum=${this.choosedMetaTree[0].typeGroups[0].elements[0].elNum}`,
+        url: `https://cache.tangl.cloud/api/app/modelsCache/${this.choosedModelId}?elNum=${this.choosedMetaTree[0].typeGroups[0].elements[0].elNum}`,
         params: {},
         data: {},
         headers: {
@@ -221,7 +202,7 @@ export default {
       })
         .then((response) => {
           try {
-            this.params = JSON.parse(response.data.meta);
+            this.setParams(JSON.parse(response.data.meta));
           } catch (e) {
             console.log(e);
           }
@@ -229,7 +210,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      this.$emit("getProperties", this.params);
+      console.log(this.params);
     },
   },
 };

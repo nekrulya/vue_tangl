@@ -1,22 +1,16 @@
 <template>
-  <!-- <li v-if="choosedItem.isGroup" class="choosed__group">
-    <div class="cont">
+  <li class="choosed__item" v-if="typeof choosedItem == 'object'">
+    <ul class="choosed__group">
       <img class="choosed__item__img" src="../assets/delete.png" alt="delete" />
-      <span class="choosed__item__text">{{ choosedItem.groupText }}</span>
-      <div class="arrows">
-        <img src="../assets/Arrow1.png" alt="arrow Up" />
-        <img src="../assets/Arrow2.png" alt="arrow Down" />
-      </div>
-    </div>
-    <ul class="choosed_list">
+      <span class="choosed__item__text">{{ Object.keys(choosedItem)[0] }}</span>
       <ChoosedListItem
-        v-for="child in choosedItem"
-        :key="child.id"
-        :choosedItem="child"
+        v-for="(item, index) in Object.values(choosedItem)[0]"
+        :choosedItem="item"
+        :key="index"
       ></ChoosedListItem>
     </ul>
-  </li> -->
-  <li class="choosed__item">
+  </li>
+  <li class="choosed__item" v-if="typeof choosedItem == 'string'">
     <ChoosedItem :choosedItem="choosedItem"></ChoosedItem>
   </li>
 </template>
@@ -59,6 +53,8 @@ export default {
 .choosed__item__img {
   height: 20px;
   margin-right: 4px;
+  position: relative;
+  top: 2px;
 }
 .choosed__item__text {
   display: inline-block;

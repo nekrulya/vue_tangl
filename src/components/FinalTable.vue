@@ -1,64 +1,86 @@
 <template>
-  <div class="table_view">
+  <div class="table_view" v-if="choosedProperties.length > 0">
     <table class="res_table">
       <thead class="thead">
         <tr>
           <th rowspan="2">Наименование</th>
-          <th colspan="2">Размер</th>
-          <th rowspan="2">Общее количество</th>
+          <th
+            v-for="prop in choosedProperties"
+            :key="prop.id"
+            :rowspan="prop.isGroup ? 1 : 2"
+            :colspan="prop.items?.length"
+          >
+            {{ prop.name }}
+          </th>
         </tr>
         <tr>
-          <th>Высота</th>
-          <th>Ширина</th>
+          <template v-for="prop in choosedProperties" :key="prop.id">
+            <template v-if="prop.isGroup">
+              <th v-for="item in prop.items" :key="item.id">
+                {{ item.name }}
+              </th>
+            </template>
+            <template v-else>
+              <th></th>
+            </template>
+          </template>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>ОК-1_1920х1080_(h)</td>
-          <td>1920</td>
-          <td>1080</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>ОК-2_1920х1080_(h)</td>
-          <td>1920</td>
-          <td>1080</td>
-          <td>25</td>
-        </tr>
-        <tr>
-          <td>ОК-3_1920х1080_(h)</td>
-          <td>1920</td>
-          <td>1080</td>
-          <td>101</td>
-        </tr>
-        <tr>
-          <td>ОК-4_1920х1080_(h)</td>
-          <td>1920</td>
-          <td>1080</td>
-          <td>102</td>
-        </tr>
-        <tr>
-          <td>ОК-5_1920х1080_(h)</td>
-          <td>1920</td>
-          <td>1080</td>
-          <td>103</td>
-        </tr>
-        <tr>
-          <td>ОК-6_1920х1080_(h)</td>
-          <td>1920</td>
-          <td>1080</td>
-          <td>104</td>
-        </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
     <div class="table_download">Скачать таблицу</div>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+
 export default {
+  computed: {
+    ...mapState({
+      isAuth: (state) => state.isAuth,
+      companies: (state) => state.companies,
+      choosedCompany: (state) => state.choosedCompany,
+      accessToken: (state) => state.accessToken,
+      dialogVisible: (state) => state.dialogVisible,
+      projects: (state) => state.projects,
+      choosedProject: (state) => state.choosedProject,
+      models: (state) => state.models,
+      choosedModel: (state) => state.choosedModel,
+      choosedModelId: (state) => state.choosedModelId,
+      modelsData: (state) => state.modelsData,
+      positions: (state) => state.positions,
+      choosedPosition: (state) => state.choosedPosition,
+      odata: (state) => state.odata,
+      metaTree: (state) => state.metaTree,
+      choosedMetaTree: (state) => state.choosedMetaTree,
+      params: (state) => state.params,
+      choosedProperties: (state) => state.choosedProperties,
+    }),
+  },
   data() {
     return {};
+  },
+  methods: {
+    ...mapMutations({
+      setAccessToken: "setAccessToken",
+      setIsAyth: "setIsAuth",
+      setCompanies: "setCompanies",
+      setChoosedCompany: "setChoosedCompany",
+      setDialogVisible: "setDialogVisible",
+      setProjects: "setProjects",
+      setChoosedProject: "setChoosedProject",
+      setModels: "setModels",
+      setChoosedModel: "setChoosedModel",
+      setChoosedModelId: "setChoosedModelId",
+      setModelsData: "setModelsData",
+      setPositions: "setPositions",
+      setChoosedPosition: "setChoosedPosition",
+      setOdata: "setOdata",
+      setMetaTree: "setMetaTree",
+      setChoosedMetaTree: "setChoosedMetaTree",
+      setParams: "setParams",
+    }),
   },
 };
 </script>

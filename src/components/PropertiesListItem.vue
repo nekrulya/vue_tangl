@@ -11,14 +11,18 @@
     </div>
     <ul class="properties__list">
       <PropertiesListItem
-        v-for="item in Object.entries(item[1])"
-        :key="item[0]"
-        :item="item"
+        v-for="itemo in Object.entries(item[1])"
+        :key="itemo[0]"
+        :item="itemo"
+        :parentItem="item[0]"
       ></PropertiesListItem>
     </ul>
   </li>
   <li v-if="!(typeof item[1] === 'object')" class="properties__item">
-    <ModelPropertiesItem :item="item[0]"></ModelPropertiesItem>
+    <ModelPropertiesItem
+      :item="item[0]"
+      :parentItem="parentItem"
+    ></ModelPropertiesItem>
   </li>
 </template>
 
@@ -26,7 +30,7 @@
 import ModelPropertiesItem from "./ModelPropertiesItem.vue";
 
 export default {
-  props: ["item"],
+  props: ["item", "parentItem"],
   components: { ModelPropertiesItem },
   data() {
     return {};

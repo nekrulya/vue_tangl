@@ -153,8 +153,16 @@ export default {
     }),
     choosePropety(e) {
       e.target.checked
-        ? this.addChoosedProperty(e.target.value)
-        : this.deleteChoosedProperty(e.target.value);
+        ? this.addChoosedProperty({
+            name: e.target.value,
+            id: e.target.id,
+            isGroup: false,
+          })
+        : this.deleteChoosedProperty({
+            name: e.target.value,
+            id: e.target.id,
+            isGroup: false,
+          });
     },
   },
 };

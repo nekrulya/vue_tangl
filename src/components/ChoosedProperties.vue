@@ -37,7 +37,16 @@ export default {
       deleteChoosedProperty: "deleteChoosedProperty",
     }),
     addGroup() {
-      this.addChoosedProperty({ "без названия": ["1", "2", "3"] });
+      this.addChoosedProperty({
+        name: "без названия",
+        id: null,
+        isGroup: true,
+        items: [
+          { name: "1", id: null, isGroup: false },
+          { name: "2", id: null, isGroup: false },
+          { name: "3", id: null, isGroup: false },
+        ],
+      });
     },
   },
 };

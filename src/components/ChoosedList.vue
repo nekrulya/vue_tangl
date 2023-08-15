@@ -1,19 +1,48 @@
 <template>
   <ul class="choosed_list">
-    <ChoosedListItem
-      v-for="(choosedItem, index) in choosedItems"
-      :key="index"
-      :choosedItem="choosedItem"
-    ></ChoosedListItem>
+    <draggable v-model="choosedProperties" @change="log">
+      <ChoosedListItem
+        v-for="(choosedItem, index) in choosedItems"
+        :key="index"
+        :choosedItem="choosedItem"
+      ></ChoosedListItem>
+    </draggable>
   </ul>
 </template>
 
 <script>
 import ChoosedListItem from "./ChoosedListItem.vue";
+import { VueDraggableNext } from "vue-draggable-next";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
     ChoosedListItem,
+    draggable: VueDraggableNext,
+  },
+  methods: {
+    ...mapMutations({
+      setChoosedProperties: "setChoosedProperties",
+    }),
+    log(event) {
+      console.log(event);
+    },
+  },
+  computed: {
+    ...mapState({
+      choosedProperties: (state) => state.choosedProperties,
+    }),
+    ...mapGetters({
+      getChoosedProperties: "getChoosedProperties",
+    }),
+    choosedProperties: {
+      get() {
+        return this.getChoosedProperties;
+      },
+      set(value) {
+        this.setChoosedProperties(value);
+      },
+    },
   },
   props: ["choosedItems"],
   data() {

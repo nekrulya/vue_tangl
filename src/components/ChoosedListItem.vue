@@ -1,16 +1,16 @@
 <template>
-  <li class="choosed__item" v-if="typeof choosedItem == 'object'">
+  <li class="choosed__item" v-if="choosedItem.isGroup">
     <ul class="choosed__group">
       <img class="choosed__item__img" src="../assets/delete.png" alt="delete" />
-      <span class="choosed__item__text">{{ Object.keys(choosedItem)[0] }}</span>
+      <span class="choosed__item__text">{{ choosedItem.name }}</span>
       <ChoosedListItem
-        v-for="(item, index) in Object.values(choosedItem)[0]"
+        v-for="(item, index) in choosedItem.items"
         :choosedItem="item"
         :key="index"
       ></ChoosedListItem>
     </ul>
   </li>
-  <li class="choosed__item" v-if="typeof choosedItem == 'string'">
+  <li class="choosed__item" v-if="!choosedItem.isGroup">
     <ChoosedItem :choosedItem="choosedItem"></ChoosedItem>
   </li>
 </template>

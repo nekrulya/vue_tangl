@@ -20,9 +20,13 @@ export default createStore({
     metaTree: [],
     choosedMetaTree: [],
     params: [],
-    choosedProperties: new Set(),
+    choosedProperties: [],
   },
-  getters: {},
+  getters: {
+    getChoosedProperties(state) {
+      return state.choosedProperties;
+    },
+  },
   mutations: {
     setIsAuth(state, isAuth) {
       state.isAuth = isAuth;
@@ -82,10 +86,12 @@ export default createStore({
       state.choosedProperties = choosedProperties;
     },
     addChoosedProperty(state, choosedProperty) {
-      state.choosedProperties.add(choosedProperty);
+      state.choosedProperties.push(choosedProperty);
     },
     deleteChoosedProperty(state, choosedProperty) {
-      state.choosedProperties.delete(choosedProperty);
+      state.choosedProperties = state.choosedProperties.filter(
+        (property) => property != choosedProperty
+      );
     },
   },
   actions: {},

@@ -1,8 +1,13 @@
 <template>
   <li class="choosed__item">
-    <img class="choosed__item__img" src="../assets/delete.png" alt="delete" />
-    <div class="choosed__item__text">
-      {{ choosedItem }}
+    <img
+      class="choosed__item__img"
+      src="../assets/delete.png"
+      alt="delete"
+      @click="deleteItem(choosedItem)"
+    />
+    <div class="choosed__item__text" :id="choosedItem.id">
+      {{ choosedItem.name }}
     </div>
     <div class="arrows">
       <img src="../assets/Arrow1.png" alt="arrow Up" />
@@ -12,8 +17,21 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+
 export default {
   props: ["choosedItem"],
+  methods: {
+    ...mapMutations({
+      addChoosedProperty: "addChoosedProperty",
+      deleteChoosedProperty: "deleteChoosedProperty",
+    }),
+    deleteItem(item) {
+      this.deleteChoosedProperty(item);
+      document.querySelector(`#${item.id}`).checked = false;
+    },
+  },
+
   data() {
     return {};
   },

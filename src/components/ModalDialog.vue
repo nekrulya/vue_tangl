@@ -248,6 +248,7 @@ export default {
 
 .metaTree {
   color: #000;
+  cursor: pointer;
 }
 
 .tree {

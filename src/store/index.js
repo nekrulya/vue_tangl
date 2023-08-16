@@ -8,6 +8,7 @@ export default createStore({
     choosedCompany: "",
     properties: [],
     dialogVisible: false,
+    dialogVisibleGroup: false,
     projects: [],
     choosedProject: "",
     models: [],
@@ -21,6 +22,7 @@ export default createStore({
     choosedMetaTree: [],
     params: [],
     choosedProperties: [],
+    propsToGroup: [],
   },
   getters: {
     getChoosedProperties(state) {
@@ -45,6 +47,9 @@ export default createStore({
     },
     setDialogVisible(state, dialogVisible) {
       state.dialogVisible = dialogVisible;
+    },
+    setDialogVisibleGroup(state, dialogVisibleGroup) {
+      state.dialogVisibleGroup = dialogVisibleGroup;
     },
     setProjects(state, projects) {
       state.projects = projects;
@@ -91,6 +96,17 @@ export default createStore({
     deleteChoosedProperty(state, choosedProperty) {
       state.choosedProperties = state.choosedProperties.filter(
         (property) => property != choosedProperty
+      );
+    },
+    setPropsToGroup(state, prop) {
+      state.propsToGroup = prop;
+    },
+    addPropsToGroup(state, prop) {
+      state.propsToGroup.push(prop);
+    },
+    deletePropsToGroup(state, prop) {
+      state.propsToGroup = state.propsToGroup.filter(
+        (property) => property != prop
       );
     },
   },

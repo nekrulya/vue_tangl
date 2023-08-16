@@ -20,9 +20,6 @@
                 {{ item.name }}
               </th>
             </template>
-            <template v-else>
-              <th></th>
-            </template>
           </template>
         </tr>
       </thead>

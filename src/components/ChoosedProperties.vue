@@ -3,7 +3,7 @@
     <div class="title_and_buttons">
       <div class="choosed_properties__title">Свойства в таблице</div>
       <div class="choosed_properties__buttons">
-        <img src="../assets/group.png" alt="group" @click="addGroup" />
+        <img src="../assets/group.png" alt="group" @click="openGroupCreate" />
         <img src="../assets/func.png" alt="func" />
         <img src="../assets/saved.png" alt="saved" />
       </div>
@@ -35,6 +35,7 @@ export default {
     ...mapMutations({
       addChoosedProperty: "addChoosedProperty",
       deleteChoosedProperty: "deleteChoosedProperty",
+      setDialogVisibleGroup: "setDialogVisibleGroup",
     }),
     addGroup() {
       this.addChoosedProperty({
@@ -47,6 +48,9 @@ export default {
           { name: "3", id: null, isGroup: false },
         ],
       });
+    },
+    openGroupCreate() {
+      this.setDialogVisibleGroup(true);
     },
   },
 };

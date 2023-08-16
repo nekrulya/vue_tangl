@@ -1,7 +1,12 @@
 <template>
   <li class="choosed__item" v-if="choosedItem.isGroup">
     <ul class="choosed__group">
-      <img class="choosed__item__img" src="../assets/delete.png" alt="delete" />
+      <img
+        class="choosed__item__img"
+        src="../assets/delete.png"
+        alt="delete"
+        @click="deleteChoosedProperty(choosedItem)"
+      />
       <span class="choosed__item__text">{{ choosedItem.name }}</span>
       <ChoosedListItem
         v-for="(item, index) in choosedItem.items"
@@ -11,12 +16,13 @@
     </ul>
   </li>
   <li class="choosed__item" v-if="!choosedItem.isGroup">
-    <ChoosedItem :choosedItem="choosedItem"></ChoosedItem>
+    <ChoosedItem :choosedItem="choosedItem" @dragstart="dragfunc"></ChoosedItem>
   </li>
 </template>
 
 <script>
 import ChoosedItem from "./ChoosedItem.vue";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -25,6 +31,35 @@ export default {
   props: ["choosedItem"],
   components: {
     ChoosedItem,
+  },
+  methods: {
+    ...mapMutations({
+      addChoosedProperty: "addChoosedProperty",
+      deleteChoosedProperty: "deleteChoosedProperty",
+    }),
+    deleteItem(item) {
+      this.deleteChoosedProperty(item);
+      for (item in choosedItem.items) {
+        document.querySelector(`#${item.id}`).checked = false;
+      }
+    },
+    dragfunc(e) {
+      let selected = e.target;
+
+      let lists = document
+        .querySelector(".choosed_properties__list")
+        .querySelectorAll(".choosed__item");
+
+      for (let list of lists) {
+        list.addEventListener("dragover", function (e) {
+          e.preventDefault();
+        });
+        list.addEventListener("drop", function (e) {
+          list.appendChild(selected);
+          selected = null;
+        });
+      }
+    },
   },
 };
 </script>

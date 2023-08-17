@@ -3,7 +3,12 @@
     <div @click.stop class="dialog__content">
       <label>
         Название группы
-        <input type="text" id="groupName" />
+        <input
+          type="text"
+          id="groupName"
+          v-model="groupName"
+          :class="{ groupNameRed: !groupName }"
+        />
       </label>
       <ul class="prop__list">
         <li v-for="prop in choosedProperties" :key="prop.id" :value="prop.id">
@@ -31,7 +36,7 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   props: [],
   data() {
-    return {};
+    return { groupName: "" };
   },
   computed: {
     ...mapState({
@@ -47,6 +52,7 @@ export default {
       setPropsToGroup: "setPropsToGroup",
       addPropsToGroup: "addPropsToGroup",
       deletePropsToGroup: "deletePropsToGroup",
+      addChoosedProperty: "addChoosedProperty",
     }),
     // скрыть модальное окно
     hideDialogGroup() {
@@ -59,7 +65,18 @@ export default {
     deleteProp(prop) {
       this.deletePropsToGroup(prop);
     },
-    addGroup() {},
+    addGroup() {
+      const newProp = {
+        id: this.groupName,
+        name: this.groupName,
+        isGroup: true,
+        items: this.propsToGroup,
+      };
+      this.addChoosedProperty(newProp);
+      this.setPropsToGroup([]);
+      this.groupName = "";
+      this.setDialogVisibleGroup(false);
+    },
   },
 };
 </script>
@@ -118,6 +135,10 @@ export default {
   font-size: 18px;
   padding: 4px 8px;
   margin-bottom: 10px;
+}
+
+.groupNameRed {
+  outline: solid red;
 }
 
 .prop__list {

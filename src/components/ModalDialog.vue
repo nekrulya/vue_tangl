@@ -33,9 +33,19 @@
           {{ md.name }}
         </option>
       </select>
-      <ul class="metaTree">
+      <!-- <ul class="metaTree">
         <li v-for="el in metaTree" :key="el.name" @click="getParams">
           {{ el.name }}
+        </li>
+      </ul> -->
+      <ul class="odata">
+        <li
+          v-for="el in this.odata.filter(
+            (element) => element.Code.split('.').length <= 3
+          )"
+          :key="el.Code"
+        >
+          {{ el.Name }}
         </li>
       </ul>
     </div>
@@ -141,7 +151,9 @@ export default {
         },
       })
         .then((response) => {
-          this.setModelsData(response.data.catalogPrioritiesSchemes);
+          this.setModelsData(
+            response.data.catalogPrioritiesSchemes[0].catalogPriorities
+          );
         })
         .catch((error) => {
           console.log(error);
@@ -162,7 +174,8 @@ export default {
         },
       })
         .then((response) => {
-          this.setOdata(response.data);
+          this.setOdata(response.data.value);
+          console.log(this.odata);
         })
         .catch((error) => {
           console.log(error);
@@ -192,7 +205,7 @@ export default {
       );
       axios({
         method: "get",
-        url: `https://cache.tangl.cloud/api/app/modelsCache/${this.choosedModelId}?elNum=${this.choosedMetaTree[0].typeGroups[0].elements[0].elNum}`,
+        url: `https://cache.tangl.cloud/api/app/modelsCache/${this.choosedModelId}?elNum=${this.choosedMetaTree[5].typeGroups[0].elements[0].elNum}`,
         params: {},
         data: {},
         headers: {
@@ -210,7 +223,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      console.log(this.params);
     },
   },
 };

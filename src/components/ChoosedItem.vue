@@ -6,12 +6,21 @@
       alt="delete"
       @click="deleteItem(choosedItem)"
     />
-    <div class="choosed__item__text" :id="choosedItem.id">
+    <div
+      class="choosed__item__text"
+      :id="choosedItem.id"
+      v-if="!this.isEditing"
+    >
       {{ choosedItem.name }}
     </div>
+    <input
+      type="text"
+      v-if="this.isEditing"
+      class="inputEdit"
+      @keydown.enter="changePropName"
+    />
     <div class="arrows">
-      <img src="../assets/Arrow1.png" alt="arrow Up" />
-      <img src="../assets/Arrow2.png" alt="arrow Down" />
+      <img src="../assets/edit.png" alt="edit prop" @click="editProp" />
     </div>
   </li>
 </template>
@@ -21,6 +30,9 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: ["choosedItem"],
+  data() {
+    return { isEditing: false };
+  },
   methods: {
     ...mapMutations({
       addChoosedProperty: "addChoosedProperty",
@@ -30,10 +42,14 @@ export default {
       this.deleteChoosedProperty(item);
       document.querySelector(`#${item.id}`).checked = false;
     },
-  },
-
-  data() {
-    return {};
+    editProp() {
+      this.isEditing = !this.isEditing;
+      console.log(this.isEditing);
+    },
+    changePropName(e) {
+      this.choosedItem.name = e.target.value;
+      this.isEditing = false;
+    },
   },
 };
 </script>
@@ -62,5 +78,10 @@ export default {
   width: 22px;
   display: flex;
   justify-content: space-between;
+}
+
+.inputEdit {
+  border: 2px solid black;
+  width: 50px;
 }
 </style>

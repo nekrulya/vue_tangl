@@ -28,9 +28,6 @@ export default {
       dialogVisible: (state) => state.dialogVisible,
       projects: (state) => state.projects,
       choosedProject: (state) => state.choosedProject,
-      models: (state) => state.models,
-      choosedModel: (state) => state.choosedModel,
-      choosedModelId: (state) => state.choosedModelId,
       modelsData: (state) => state.modelsData,
       positions: (state) => state.positions,
       choosedPosition: (state) => state.choosedPosition,
@@ -43,108 +40,7 @@ export default {
   },
   props: ["properties"],
   data() {
-    return {
-      items: [
-        {
-          isGroup: false,
-          groupText: "",
-          element: {
-            isGroup: false,
-            groupText: "",
-            text: "Высота",
-            id: "Высота",
-            name: "Высота",
-          },
-          children: [],
-        },
-        {
-          isGroup: true,
-          groupText: "Группа элементов 1",
-          element: {
-            isGroup: true,
-            groupText: "Группа элементов 1",
-            text: "Группа элементов 1",
-            id: "Группа элементов 1",
-            name: "Группа элементов 1",
-          },
-          children: [
-            {
-              isGroup: false,
-              groupText: "",
-              element: {
-                isGroup: false,
-                groupText: "",
-                text: "Элемент 1",
-                id: "Элемент 1",
-                name: "Элемент 1",
-              },
-              children: [],
-            },
-            {
-              isGroup: true,
-              groupText: "Группа в группе",
-              element: {
-                isGroup: true,
-                groupText: "Группа в группе",
-                text: "Группа в группе",
-                id: "Группа в группе",
-                name: "Группа в группе",
-              },
-              children: [
-                {
-                  isGroup: false,
-                  groupText: "",
-                  element: {
-                    isGroup: false,
-                    groupText: "",
-                    text: "Элемент 2",
-                    id: "Элемент 2",
-                    name: "Элемент 2",
-                  },
-                  children: [],
-                },
-                {
-                  isGroup: false,
-                  groupText: "",
-                  element: {
-                    isGroup: false,
-                    groupText: "",
-                    text: "Элемент 3",
-                    id: "Элемент 3",
-                    name: "Элемент 3",
-                  },
-                  children: [],
-                },
-              ],
-            },
-            {
-              isGroup: false,
-              groupText: "",
-              element: {
-                isGroup: false,
-                groupText: "",
-                text: "Элемент 4",
-                id: "Элемент 4",
-                name: "Элемент 4",
-              },
-              children: [],
-            },
-          ],
-        },
-        {
-          isGroup: false,
-          groupText: "",
-          element: {
-            isGroup: false,
-            groupText: "",
-            text: "Элемент 5",
-            id: "Элемент 5",
-            name: "Элемент 5",
-          },
-          children: [],
-        },
-      ],
-    };
+    return {};
   },
   methods: {
     ...mapMutations({

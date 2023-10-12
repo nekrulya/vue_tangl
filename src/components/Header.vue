@@ -43,6 +43,7 @@ export default {
       companies: (state) => state.companies,
       accessToken: (state) => state.accessToken,
       dialogVisible: (state) => state.dialogVisible,
+      api: (state) => state.api,
     }),
   },
   methods: {
@@ -56,15 +57,16 @@ export default {
     async loginTangle() {
       axios({
         method: "post",
-        url: "https://auth.tangl.cloud/connect/token",
+        url: this.api.login,
         params: {},
         data: {
-          client_id: "BimTanglValue_External",
-          grant_type: "password",
           username: this.login,
           password: this.password,
         },
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Origin": "*",
+        },
       })
         .then((response) => {
           this.password = "";
@@ -75,6 +77,10 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+
+      // this.setAccessToken("04tu0b3n[guern0[gj39nj9j49ut]]");
+      // this.setIsAyth(true);
+      // this.updateCompanies(this.accessToken);
     },
     // выйти из аккаунта
     logOut() {
@@ -90,20 +96,24 @@ export default {
     updateCompanies(accessToken) {
       axios({
         method: "get",
-        url: "https://auth.tangl.cloud/api/app/company",
+        url: this.api.companies,
         params: {},
         data: {},
         headers: {
-          "Content-Type": "text/plain",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
       })
         .then((response) => {
-          this.setCompanies(response.data);
+          this.setCompanies(response.data.companies);
         })
         .catch((error) => {
           console.log(error);
         });
+
+      // this.setCompanies([
+      //   { company_name: "Третий трест", isPersonal: false, company_id: 123 },
+      // ]);
     },
   },
 };

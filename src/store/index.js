@@ -6,14 +6,16 @@ export default createStore({
     accessToken: "",
     companies: [],
     choosedCompany: "",
+    choosedCompanyId: "",
     properties: [],
     dialogVisible: false,
     dialogVisibleGroup: false,
     projects: [],
     choosedProject: "",
-    models: [],
-    choosedModel: "",
+    choosedProjectId: "",
+    folders: [],
     choosedModelId: "",
+    catalogs: [],
     modelsData: [],
     positions: [],
     choosedPosition: "",
@@ -23,6 +25,16 @@ export default createStore({
     params: [],
     choosedProperties: [],
     propsToGroup: [],
+    api: {
+      login: "http://192.168.102.197:8000/api/app/user/authUser",
+      companies: "http://192.168.102.197:8000/api/app/company/getCompanyList",
+      projectList:
+        "http://192.168.102.197:8000/api/app/project/getProjectList?company_id=",
+      projectFoldersList:
+        "http://192.168.102.197:8000/api/app/project/getProjectFolders?project_id=",
+      catalogs:
+        "http://192.168.102.197:8000/api/app/model/getCatalogList?model_id=",
+    },
   },
   getters: {
     getChoosedProperties(state) {
@@ -42,6 +54,9 @@ export default createStore({
     setChoosedCompany(state, choosedCompany) {
       state.choosedCompany = choosedCompany;
     },
+    setChoosedCompanyId(state, choosedCompanyId) {
+      state.choosedCompanyId = choosedCompanyId;
+    },
     setProperties(state, properties) {
       state.properties = properties;
     },
@@ -57,14 +72,17 @@ export default createStore({
     setChoosedProject(state, choosedProject) {
       state.choosedProject = choosedProject;
     },
-    setModels(state, models) {
-      state.models = models;
+    setChoosedProjectId(state, choosedProjectId) {
+      state.choosedProjectId = choosedProjectId;
     },
-    setChoosedModel(state, choosedModel) {
-      state.choosedModel = choosedModel;
+    setFolders(state, folders) {
+      state.folders = folders;
     },
     setChoosedModelId(state, choosedModelId) {
       state.choosedModelId = choosedModelId;
+    },
+    setCatalogs(state, catalogs) {
+      state.catalogs = catalogs;
     },
     setModelsData(state, modelsData) {
       state.modelsData = modelsData;

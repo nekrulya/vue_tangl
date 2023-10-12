@@ -18,8 +18,15 @@ import ModelProperties from "@/components/ModelProperties.vue";
 import ChoosedProperties from "@/components/ChoosedProperties.vue";
 import FinalTable from "@/components/FinalTable.vue";
 
+import { mapState } from "vuex";
+
 export default {
-  props: ["properties"],
+  props: [],
+  computed: {
+    ...mapState({
+      isAuth: (state) => state.isAuth,
+    }),
+  },
   components: {
     ModelProperties,
     ChoosedProperties,

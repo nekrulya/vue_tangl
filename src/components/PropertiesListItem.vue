@@ -3,7 +3,7 @@
     <div class="text_angle">
       <span class="properties__item__text">{{ item[0] }}</span>
       <img
-        class="angle"
+        class="angle rotate90"
         src="../assets/arrow-down.png"
         alt="open/close"
         @click="hide"
@@ -61,5 +61,8 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+.rotate90 {
+  transform: rotate(90);
 }
 </style>

@@ -28,7 +28,7 @@
         </option>
       </select> -->
       <ProjectFolders :folders="this.folders" />
-      <select class="companies" @change="updatePositions">
+      <select class="companies" @change="updatePositionList">
         <option disabled selected>Выберите Каталог</option>
         <option
           v-for="catalog in catalogs"
@@ -38,6 +38,7 @@
           {{ catalog.catalog_name }}
         </option>
       </select>
+      <PositionList :positions="this.positionList" />
       <!-- <ul class="metaTree">
         <li v-for="el in metaTree" :key="el.name" @click="getParams">
           {{ el.name }}
@@ -61,6 +62,7 @@
 import axios from "axios";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 import ProjectFolders from "./ProjectFolders.vue";
+import PositionList from "./PositionList.vue";
 
 export default {
   props: [],
@@ -71,6 +73,7 @@ export default {
   },
   components: {
     ProjectFolders,
+    PositionList,
   },
   computed: {
     ...mapState({
@@ -86,6 +89,9 @@ export default {
       folders: (state) => state.folders,
       models: (state) => state.models,
       catalogs: (state) => state.catalogs,
+      choosedCatalogId: (state) => state.choosedCatalogId,
+      positionList: (state) => state.positionList,
+
       choosedModel: (state) => state.choosedModel,
       choosedModelId: (state) => state.choosedModelId,
       modelsData: (state) => state.modelsData,
@@ -111,6 +117,9 @@ export default {
       setChoosedProjectId: "setChoosedProjectId",
       setFolders: "setFolders",
       setCatalogs: "setCatalogs",
+      setChoosedCatalogId: "setChoosedCatalogId",
+      setPositionList: "setPositionList",
+
       setModelsData: "setModelsData",
       setPositions: "setPositions",
       setChoosedPosition: "setChoosedPosition",
@@ -162,6 +171,27 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.setFolders(response.data.folders);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    updatePositionList(e) {
+      this.setChoosedCatalogId(e.target.value);
+      axios({
+        method: "get",
+        url: `${this.api.positionList + this.choosedCatalogId}`,
+        params: {},
+        data: {},
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      })
+        .then((response) => {
+          this.setPositionList(response.data.children);
+          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);

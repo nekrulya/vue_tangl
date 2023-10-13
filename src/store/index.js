@@ -3,6 +3,8 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     isAuth: false,
+    isLoading: false,
+    username: "",
     accessToken: "",
     companies: [],
     choosedCompany: "",
@@ -16,9 +18,13 @@ export default createStore({
     folders: [],
     choosedModelId: "",
     catalogs: [],
+    choosedCatalogId: "",
+    positionList: {},
+    choosedPositionId: "",
+    parametrsList: {},
+
     modelsData: [],
     positions: [],
-    choosedPosition: "",
     odata: [],
     metaTree: [],
     choosedMetaTree: [],
@@ -34,6 +40,11 @@ export default createStore({
         "http://192.168.102.197:8000/api/app/project/getProjectFolders?project_id=",
       catalogs:
         "http://192.168.102.197:8000/api/app/model/getCatalogList?model_id=",
+      positionList:
+        "http://192.168.102.197:8000/api/app/catalog/getPositionList?catalog_id=",
+      parametrsList1:
+        "http://192.168.102.197:8000/api/app/parametrs/getParametrsList?position_id=",
+      parametrsList2: "&catalog_id=",
     },
   },
   getters: {
@@ -47,6 +58,9 @@ export default createStore({
     },
     setAccessToken(state, accessToken) {
       state.accessToken = accessToken;
+    },
+    setUsername(state, username) {
+      state.username = username;
     },
     setCompanies(state, companies) {
       state.companies = companies;
@@ -84,6 +98,20 @@ export default createStore({
     setCatalogs(state, catalogs) {
       state.catalogs = catalogs;
     },
+    setChoosedCatalogId(state, choosedCatalogId) {
+      state.choosedCatalogId = choosedCatalogId;
+    },
+    setPositionList(state, positionList) {
+      state.positionList = positionList;
+    },
+    setChoosedPositionId(state, choosedPositionId) {
+      state.choosedPositionId = choosedPositionId;
+    },
+
+    setParametrsList(state, parametrsList) {
+      state.parametrsList = parametrsList;
+    },
+
     setModelsData(state, modelsData) {
       state.modelsData = modelsData;
     },

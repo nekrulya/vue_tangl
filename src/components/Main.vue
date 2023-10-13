@@ -9,6 +9,7 @@
         :choosedProperties="choosedProperties"
       ></ChoosedProperties>
       <FinalTable></FinalTable>
+      <Loader />
     </div>
   </main>
 </template>
@@ -17,6 +18,7 @@
 import ModelProperties from "@/components/ModelProperties.vue";
 import ChoosedProperties from "@/components/ChoosedProperties.vue";
 import FinalTable from "@/components/FinalTable.vue";
+import Loader from "@/components/Loader.vue";
 
 import { mapState } from "vuex";
 
@@ -31,6 +33,7 @@ export default {
     ModelProperties,
     ChoosedProperties,
     FinalTable,
+    Loader,
   },
   data() {
     return {};

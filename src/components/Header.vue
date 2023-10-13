@@ -18,7 +18,7 @@
       </button>
     </form>
     <div class="logout" v-if="isAuth">
-      <span>{{ login }}</span>
+      <span>{{ this.username }}</span>
       <button @click.prevent="openModal" class="open_modal">Настроить</button>
       <button @click.prevent="logOut">Выйти</button>
     </div>
@@ -40,6 +40,7 @@ export default {
   computed: {
     ...mapState({
       isAuth: (state) => state.isAuth,
+      username: (state) => state.username,
       companies: (state) => state.companies,
       accessToken: (state) => state.accessToken,
       dialogVisible: (state) => state.dialogVisible,
@@ -50,6 +51,7 @@ export default {
     ...mapMutations({
       setAccessToken: "setAccessToken",
       setIsAyth: "setIsAuth",
+      setUsername: "setUsername",
       setCompanies: "setCompanies",
       setDialogVisible: "setDialogVisible",
     }),
@@ -69,10 +71,14 @@ export default {
         },
       })
         .then((response) => {
+          console.log(response.data);
           this.password = "";
           this.setAccessToken(response.data.access_token);
           this.setIsAyth(true);
+          this.setUsername(response.data.username);
           this.updateCompanies(this.accessToken);
+          localStorage.accessToken = this.accessToken;
+          localStorage.username = this.username;
         })
         .catch(function (error) {
           console.log(error);
@@ -87,6 +93,8 @@ export default {
       this.login = "";
       this.setAccessToken("");
       this.setIsAyth(false);
+      localStorage.username = "";
+      localStorage.accessToken = "";
     },
     // открыть модальное окно выбора
     openModal() {

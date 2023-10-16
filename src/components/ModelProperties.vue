@@ -2,43 +2,28 @@
   <div class="model_properties" @change="choosePropety">
     <div class="title_and_hide">
       <div class="model_properties__title">Свойства в модели</div>
-      <div class="model_properties__hide">свернуть всё</div>
+      <div class="model_properties__hide" @click="hideAll">свернуть всё</div>
     </div>
     <div class="properties">
-      <!-- <pre>{{ Object.entries(this.params) }}</pre> -->
-      <PropertiesList :items="Object.entries(this.params)"></PropertiesList>
+      <ParametrsList :parametrs="parametrs" />
     </div>
   </div>
 </template>
 
 <script>
-import PropertiesList from "./PropertiesList.vue";
+import ParametrsList from "@/components/ParametrsList.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   components: {
-    PropertiesList,
+    ParametrsList,
   },
   computed: {
     ...mapState({
       isAuth: (state) => state.isAuth,
-      companies: (state) => state.companies,
-      choosedCompany: (state) => state.choosedCompany,
-      accessToken: (state) => state.accessToken,
-      dialogVisible: (state) => state.dialogVisible,
-      projects: (state) => state.projects,
-      choosedProject: (state) => state.choosedProject,
-      modelsData: (state) => state.modelsData,
-      positions: (state) => state.positions,
-      choosedPosition: (state) => state.choosedPosition,
-      odata: (state) => state.odata,
-      metaTree: (state) => state.metaTree,
-      choosedMetaTree: (state) => state.choosedMetaTree,
-      params: (state) => state.params,
-      choosedProperties: (state) => state.choosedProperties,
     }),
   },
-  props: ["properties"],
+  props: ["parametrs"],
   data() {
     return {};
   },
@@ -59,6 +44,12 @@ export default {
             id: e.target.id,
             isGroup: false,
           });
+    },
+    hideAll(e) {
+      const uls = document.querySelectorAll(".parametrs");
+      for (let i = 1; i < uls.length; i++) {
+        uls[i].hidden = true;
+      }
     },
   },
 };
@@ -88,6 +79,8 @@ export default {
   font-weight: 400;
   line-height: normal;
   margin-top: 20px;
+
+  cursor: pointer;
 }
 
 .properties {

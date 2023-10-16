@@ -2,7 +2,7 @@
   <main class="main">
     <div class="content">
       <ModelProperties
-        :properties="properties"
+        :parametrs="this.parametrsList"
         @choosePropety="addChooseProperty"
       ></ModelProperties>
       <ChoosedProperties
@@ -27,6 +27,7 @@ export default {
   computed: {
     ...mapState({
       isAuth: (state) => state.isAuth,
+      parametrsList: (state) => state.parametrsList,
     }),
   },
   components: {

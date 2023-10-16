@@ -39,12 +39,14 @@
         </option>
       </select>
       <PositionList :positions="this.positionList" />
+
       <!-- <ul class="metaTree">
         <li v-for="el in metaTree" :key="el.name" @click="getParams">
           {{ el.name }}
         </li>
       </ul> -->
-      <ul class="odata">
+
+      <!-- <ul class="odata">
         <li
           v-for="el in this.odata.filter(
             (element) => element.Code.split('.').length <= 3
@@ -53,7 +55,7 @@
         >
           {{ el.Name }}
         </li>
-      </ul>
+      </ul> -->
     </div>
   </div>
 </template>

@@ -3,8 +3,23 @@
     <div class="title_and_hide">
       <div class="model_properties__title">Свойства в модели</div>
       <div class="model_properties__hide" @click="hideAll">свернуть всё</div>
+      <input
+        class="filterInput"
+        type="text"
+        @input="
+          (e) =>
+            this.setFilteredParametrsList(
+              filterParametrs(
+                this.parametrsList,
+                e.target.value,
+                filterParametrs
+              )
+            )
+        "
+      />
     </div>
     <div class="properties">
+      <!-- <pre>{{ filterParametrs(parametrs, "adsk", this.filterParametrs) }}</pre> -->
       <ParametrsList :parametrs="parametrs" />
     </div>
   </div>
@@ -21,7 +36,9 @@ export default {
   computed: {
     ...mapState({
       isAuth: (state) => state.isAuth,
+      parametrsList: (state) => state.parametrsList,
     }),
+    ...mapGetters({ filterParametrs1: "getFilteredParametrsList" }),
   },
   props: ["parametrs"],
   data() {
@@ -31,6 +48,7 @@ export default {
     ...mapMutations({
       addChoosedProperty: "addChoosedProperty",
       deleteChoosedProperty: "deleteChoosedProperty",
+      setFilteredParametrsList: "setFilteredParametrsList",
     }),
     choosePropety(e) {
       e.target.checked
@@ -45,11 +63,31 @@ export default {
             isGroup: false,
           });
     },
+
     hideAll(e) {
       const uls = document.querySelectorAll(".parametrs");
       for (let i = 1; i < uls.length; i++) {
         uls[i].hidden = true;
       }
+    },
+
+    filterParametrs: (parametrs, key, func) => {
+      const newParametrs = {};
+      for (const [k, v] of Object.entries(parametrs)) {
+        if (typeof v === "object") {
+          const obj = func(v, key, func);
+          if (Object.keys(obj).length > 0) {
+            newParametrs[k] = obj;
+            console.log(obj);
+          }
+        } else {
+          if (k.toLowerCase().includes(key.toLowerCase())) {
+            newParametrs[k] = 1;
+          }
+        }
+        // console.log(k, typeof v);
+      }
+      return newParametrs;
     },
   },
 };
@@ -89,5 +127,9 @@ export default {
   overflow-x: hidden;
   overflow-y: scroll;
   height: calc(100vh - 85px);
+}
+
+.filterInput {
+  border: 1px solid black;
 }
 </style>

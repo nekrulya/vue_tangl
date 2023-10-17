@@ -22,6 +22,7 @@ export default createStore({
     positionList: {},
     choosedPositionId: "",
     parametrsList: {},
+    filteredParametrsList: {},
 
     modelsData: [],
     positions: [],
@@ -51,6 +52,13 @@ export default createStore({
     getChoosedProperties(state) {
       return state.choosedProperties;
     },
+    // getFilteredParametrsList: (state) => (expr) => {
+    //   const params = {};
+    //   for (const [k, v] of Object.entries(state.parametrsList)) {
+    //     if
+    //   }
+    //   return params;
+    // },
   },
   mutations: {
     setIsAuth(state, isAuth) {
@@ -110,6 +118,9 @@ export default createStore({
 
     setParametrsList(state, parametrsList) {
       state.parametrsList = parametrsList;
+    },
+    setFilteredParametrsList(state, filteredParametrsList) {
+      state.filteredParametrsList = filteredParametrsList;
     },
 
     setModelsData(state, modelsData) {

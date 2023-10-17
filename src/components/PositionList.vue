@@ -42,6 +42,7 @@ export default {
       setAccessToken: "setAccessToken",
       setChoosedPositionId: "setChoosedPositionId",
       setParametrsList: "setParametrsList",
+      setFilteredParametrsList: "setFilteredParametrsList",
     }),
     updateParametrsList(e) {
       this.setChoosedPositionId(e.target.value);
@@ -63,6 +64,7 @@ export default {
       })
         .then((response) => {
           this.setParametrsList(response.data);
+          this.setFilteredParametrsList(response.data);
           console.log(response.data);
         })
         .catch((error) => {

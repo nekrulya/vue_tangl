@@ -1,7 +1,7 @@
 <template>
   <ul class="parametrs">
     <template v-for="[key, v] of Object.entries(parametrs)" :key="key">
-      <li v-if="typeof v === 'object'">
+      <li v-if="typeof v === 'object'" class="parametrsItem">
         <div
           class="parentTitle"
           @click="
@@ -18,6 +18,7 @@
         <ParametrsList :parametrs="v" />
       </li>
       <li v-else class="model__item">
+        <input type="checkbox" @click="addChoosedProperty" :value="key" />
         {{ key }}
       </li>
     </template>
@@ -43,32 +44,6 @@ export default {
     ...mapMutations({
       setAccessToken: "setAccessToken",
     }),
-    updateParametrsList(e) {
-      //   this.setChoosedPositionId(e.target.value);
-      //   console.log(e.target);
-      //   axios({
-      //     method: "get",
-      //     url: `${
-      //       this.api.parametrsList1 +
-      //       this.choosedPositionId +
-      //       this.api.parametrsList2 +
-      //       this.choosedCatalogId
-      //     }`,
-      //     params: {},
-      //     data: {},
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Authorization: `Bearer ${this.accessToken}`,
-      //     },
-      //   })
-      //     .then((response) => {
-      //       this.setParametrslist(response.data);
-      //       console.log(response.data);
-      //     })
-      //     .catch((error) => {
-      //       console.log(error);
-      //     });
-    },
   },
 };
 </script>

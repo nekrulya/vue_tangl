@@ -56,12 +56,14 @@ export default {
             name: e.target.value,
             id: e.target.id,
             isGroup: false,
+            path: e.target.closest(".parametrsItem"),
           })
         : this.deleteChoosedProperty({
             name: e.target.value,
             id: e.target.id,
             isGroup: false,
           });
+      console.log(e.target.closest(".parametrsItem"));
     },
 
     hideAll(e) {

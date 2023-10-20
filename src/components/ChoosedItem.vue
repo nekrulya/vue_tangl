@@ -8,7 +8,7 @@
     />
     <div
       class="choosed__item__text"
-      :id="choosedItem.id"
+      :id="choosedItem.path"
       v-if="!this.isEditing"
     >
       {{ choosedItem.name }}
@@ -17,6 +17,7 @@
       type="text"
       v-if="this.isEditing"
       class="inputEdit"
+      :value="choosedItem.name"
       @keydown.enter="changePropName"
     />
     <div class="arrows">
@@ -40,7 +41,12 @@ export default {
     }),
     deleteItem(item) {
       this.deleteChoosedProperty(item);
-      document.querySelector(`#${item.id}`).checked = false;
+      document.querySelector(`input[value="${item.path}"]`).checked = false;
+      // console.log(
+      //   document.querySelector(
+      //     `input[value="${item.path}"], input[name="${item.name}"]`
+      //   )
+      // );
     },
     editProp() {
       this.isEditing = !this.isEditing;

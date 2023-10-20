@@ -6,7 +6,6 @@
           class="parentTitle"
           @click="
             (e) => {
-              console.log(e);
               e.target.closest('.parentTitle').nextElementSibling.hidden =
                 !e.target.closest('.parentTitle').nextElementSibling.hidden;
             }
@@ -15,10 +14,15 @@
           {{ key }}
           <img :src="'/img/caret-down.png'" alt="" />
         </div>
-        <ParametrsList :parametrs="v" />
+        <ParametrsList :parametrs="v" :path="path + ', ' + key" />
       </li>
       <li v-else class="model__item">
-        <input type="checkbox" @click="addChoosedProperty" :value="key" />
+        <input
+          type="checkbox"
+          @click="addChoosedProperty"
+          :value="path + ', ' + key"
+          :name="key"
+        />
         {{ key }}
       </li>
     </template>
@@ -30,7 +34,7 @@ import axios from "axios";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  props: ["parametrs"],
+  props: ["parametrs", "path"],
   data() {
     return {};
   },

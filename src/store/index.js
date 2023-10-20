@@ -23,6 +23,7 @@ export default createStore({
     choosedPositionId: "",
     parametrsList: {},
     filteredParametrsList: {},
+    positionChildrenList: {},
 
     modelsData: [],
     positions: [],
@@ -46,6 +47,9 @@ export default createStore({
       parametrsList1:
         "http://192.168.102.197:8000/api/app/parametrs/getParametrsList?position_id=",
       parametrsList2: "&catalog_id=",
+      positionChildrenList1:
+        "http://192.168.102.197:8000/api/app/catalog/getPositionChildrenList?position_id=",
+      positionChildrenList2: "&catalog_id=",
     },
   },
   getters: {
@@ -114,6 +118,9 @@ export default createStore({
     },
     setChoosedPositionId(state, choosedPositionId) {
       state.choosedPositionId = choosedPositionId;
+    },
+    setPositionChildrenList(state, positionChildrenList) {
+      state.positionChildrenList = positionChildrenList;
     },
 
     setParametrsList(state, parametrsList) {

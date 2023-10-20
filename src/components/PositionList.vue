@@ -35,6 +35,7 @@ export default {
       parametrsList: (state) => state.parametrsList,
       api: (state) => state.api,
       choosedCatalogId: (state) => state.choosedCatalogId,
+      positionChildrenList: (state) => state.positionChildrenList,
     }),
   },
   methods: {
@@ -43,10 +44,10 @@ export default {
       setChoosedPositionId: "setChoosedPositionId",
       setParametrsList: "setParametrsList",
       setFilteredParametrsList: "setFilteredParametrsList",
+      setPositionChildrenList: "setPositionChildrenList",
     }),
     updateParametrsList(e) {
       this.setChoosedPositionId(e.target.value);
-      console.log(e.target);
       axios({
         method: "get",
         url: `${
@@ -65,6 +66,29 @@ export default {
         .then((response) => {
           this.setParametrsList(response.data);
           this.setFilteredParametrsList(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      axios({
+        method: "get",
+        url: `${
+          this.api.positionChildrenList1 +
+          this.choosedPositionId +
+          this.api.positionChildrenList2 +
+          this.choosedCatalogId
+        }`,
+        params: {},
+        data: {},
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      })
+        .then((response) => {
+          this.setPositionChildrenList(response.data.children);
           console.log(response.data);
         })
         .catch((error) => {

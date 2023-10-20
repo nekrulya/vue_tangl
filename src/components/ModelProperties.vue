@@ -20,7 +20,7 @@
     </div>
     <div class="properties">
       <!-- <pre>{{ filterParametrs(parametrs, "adsk", this.filterParametrs) }}</pre> -->
-      <ParametrsList :parametrs="parametrs" />
+      <ParametrsList :parametrs="parametrs" :path="'root'" />
     </div>
   </div>
 </template>
@@ -53,18 +53,27 @@ export default {
     choosePropety(e) {
       e.target.checked
         ? this.addChoosedProperty({
-            name: e.target.value,
-            id: e.target.id,
+            name: e.target.name,
+            path: e.target.value,
             isGroup: false,
-            path: e.target.closest(".parametrsItem"),
           })
         : this.deleteChoosedProperty({
-            name: e.target.value,
-            id: e.target.id,
+            name: e.target.name,
+            path: e.target.value,
             isGroup: false,
           });
-      console.log(e.target.closest(".parametrsItem"));
+      // console.log(this.findPath(e.target));
     },
+
+    // findPath(element) {
+    //   let path = "";
+    //   path += element
+    //     .closest(".parametrsItem")
+    //     .querySelector(".parentTitle").textContent;
+    //   console.log(element.closest(".parametrs"));
+    //   path += " " + this.findPath(element.closest(".parametrs"));
+    //   return path;
+    // },
 
     hideAll(e) {
       const uls = document.querySelectorAll(".parametrs");
@@ -80,14 +89,12 @@ export default {
           const obj = func(v, key, func);
           if (Object.keys(obj).length > 0) {
             newParametrs[k] = obj;
-            console.log(obj);
           }
         } else {
           if (k.toLowerCase().includes(key.toLowerCase())) {
             newParametrs[k] = 1;
           }
         }
-        // console.log(k, typeof v);
       }
       return newParametrs;
     },

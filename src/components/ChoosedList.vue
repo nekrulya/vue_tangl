@@ -1,6 +1,6 @@
 <template>
   <ul class="choosed_list">
-    <draggable v-model="choosedProperties" @change="log">
+    <draggable v-model="choosedProperties">
       <ChoosedListItem
         v-for="(choosedItem, index) in choosedItems"
         :key="index"
@@ -24,9 +24,6 @@ export default {
     ...mapMutations({
       setChoosedProperties: "setChoosedProperties",
     }),
-    log(event) {
-      console.log(event);
-    },
   },
   computed: {
     ...mapState({

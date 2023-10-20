@@ -51,17 +51,20 @@ export default {
       setFilteredParametrsList: "setFilteredParametrsList",
     }),
     choosePropety(e) {
-      e.target.checked
-        ? this.addChoosedProperty({
-            name: e.target.name,
-            path: e.target.value,
-            isGroup: false,
-          })
-        : this.deleteChoosedProperty({
-            name: e.target.name,
-            path: e.target.value,
-            isGroup: false,
-          });
+      if (e.target.checked) {
+        this.addChoosedProperty({
+          name: e.target.name,
+          path: e.target.value,
+          isGroup: false,
+        });
+      } else {
+        this.deleteChoosedProperty({
+          name: e.target.name,
+          path: e.target.value,
+          isGroup: false,
+        });
+      }
+
       // console.log(this.findPath(e.target));
     },
 

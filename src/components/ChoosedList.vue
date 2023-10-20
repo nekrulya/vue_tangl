@@ -29,18 +29,8 @@ export default {
     ...mapState({
       choosedProperties: (state) => state.choosedProperties,
     }),
-    ...mapGetters({
-      getChoosedProperties: "getChoosedProperties",
-    }),
-    choosedProperties: {
-      get() {
-        return this.getChoosedProperties;
-      },
-      set(value) {
-        this.setChoosedProperties(value);
-      },
-    },
   },
+
   props: ["choosedItems"],
   data() {
     return {};

@@ -11,7 +11,7 @@
       :id="choosedItem.path"
       v-if="!this.isEditing"
     >
-      {{ choosedItem.name }}
+      {{ choosedItem.tableName }}
     </div>
     <input
       type="text"
@@ -48,7 +48,7 @@ export default {
       console.log(this.isEditing);
     },
     changePropName(e) {
-      this.choosedItem.name = e.target.value;
+      this.choosedItem.tableName = e.target.value;
       this.isEditing = false;
     },
   },

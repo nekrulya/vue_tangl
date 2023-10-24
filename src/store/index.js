@@ -24,13 +24,13 @@ export default createStore({
     parametrsList: {},
     filteredParametrsList: {},
     positionChildrenList: {},
+    params: {},
 
     modelsData: [],
     positions: [],
     odata: [],
     metaTree: [],
     choosedMetaTree: [],
-    params: [],
     choosedProperties: [],
     propsToGroup: [],
     api: {
@@ -50,6 +50,9 @@ export default createStore({
       positionChildrenList1:
         "http://192.168.102.197:8000/api/app/catalog/getPositionChildrenList?position_id=",
       positionChildrenList2: "&catalog_id=",
+      getParamsValue1:
+        "http://192.168.102.197:8000/api/app/parametrs/getParamsValue?position_id=",
+      getParamsValue2: "&path=",
     },
   },
   getters: {
@@ -122,12 +125,17 @@ export default createStore({
     setPositionChildrenList(state, positionChildrenList) {
       state.positionChildrenList = positionChildrenList;
     },
-
     setParametrsList(state, parametrsList) {
       state.parametrsList = parametrsList;
     },
     setFilteredParametrsList(state, filteredParametrsList) {
       state.filteredParametrsList = filteredParametrsList;
+    },
+    addPosToParams(state, pos) {
+      state.params[pos] = {};
+    },
+    addValueToPosInParams(state, list) {
+      state.params[list[0]][list[1]] = list[2];
     },
 
     setModelsData(state, modelsData) {
@@ -136,9 +144,9 @@ export default createStore({
     setPositions(state, positions) {
       state.positions = positions;
     },
-    setChoosedPosition(state, choosedPosition) {
-      state.choosedPosition = choosedPosition;
-    },
+    // setChoosedPosition(state, choosedPosition) {
+    //   state.choosedPosition = choosedPosition;
+    // },
     setOdata(state, odata) {
       state.odata = odata;
     },

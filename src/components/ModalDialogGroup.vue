@@ -22,7 +22,7 @@
               }
             "
           />
-          {{ prop.name }}
+          {{ prop.tableName }}
         </li>
       </ul>
       <button class="addGroup" @click.prevent="addGroup">Добавить</button>
@@ -69,6 +69,7 @@ export default {
       const newProp = {
         id: this.groupName,
         name: this.groupName,
+        tableName: this.groupName,
         isGroup: true,
         items: this.propsToGroup,
       };

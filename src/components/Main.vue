@@ -9,7 +9,7 @@
         :choosedProperties="choosedProperties"
       ></ChoosedProperties>
       <FinalTable></FinalTable>
-      <Loader />
+      <!-- <Loader /> -->
     </div>
   </main>
 </template>

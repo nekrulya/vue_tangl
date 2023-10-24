@@ -7,7 +7,7 @@
         alt="delete"
         @click="deleteChoosedProperty(choosedItem)"
       />
-      <span class="choosed__item__text">{{ choosedItem.name }}</span>
+      <span class="choosed__item__text">{{ choosedItem.tableName }}</span>
       <ChoosedListItem
         v-for="(item, index) in choosedItem.items"
         :choosedItem="item"

@@ -36,6 +36,7 @@ export default {
       api: (state) => state.api,
       choosedCatalogId: (state) => state.choosedCatalogId,
       positionChildrenList: (state) => state.positionChildrenList,
+      params: (state) => state.params,
     }),
   },
   methods: {
@@ -45,6 +46,8 @@ export default {
       setParametrsList: "setParametrsList",
       setFilteredParametrsList: "setFilteredParametrsList",
       setPositionChildrenList: "setPositionChildrenList",
+      addPosToParams: "addPosToParams",
+      addValueToPosInParams: "addValueToPosInParams",
     }),
     updateParametrsList(e) {
       this.setChoosedPositionId(e.target.value);
@@ -89,6 +92,10 @@ export default {
       })
         .then((response) => {
           this.setPositionChildrenList(response.data.children);
+          for (let posChild of this.positionChildrenList) {
+            this.addPosToParams(posChild.id);
+            this.addValueToPosInParams([posChild.id, "dbname", posChild.name]);
+          }
           console.log(response.data);
         })
         .catch((error) => {

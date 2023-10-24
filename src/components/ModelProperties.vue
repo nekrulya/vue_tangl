@@ -54,12 +54,14 @@ export default {
       if (e.target.checked) {
         this.addChoosedProperty({
           name: e.target.name,
+          tableName: e.target.name,
           path: e.target.value,
           isGroup: false,
         });
       } else {
         this.deleteChoosedProperty({
           name: e.target.name,
+          tableName: e.target.name,
           path: e.target.value,
           isGroup: false,
         });
@@ -111,6 +113,8 @@ export default {
   min-width: 400px;
   width: max-content;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
 }
 .title_and_hide {
   padding: 12px 10px;

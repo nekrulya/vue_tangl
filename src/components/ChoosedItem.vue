@@ -5,6 +5,7 @@
       src="../assets/delete.png"
       alt="delete"
       @click="deleteItem(choosedItem)"
+      v-if="deleteOption"
     />
     <div
       class="choosed__item__text"
@@ -30,7 +31,7 @@
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  props: ["choosedItem"],
+  props: ["choosedItem", "deleteOption"],
   data() {
     return { isEditing: false };
   },

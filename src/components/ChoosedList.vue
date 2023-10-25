@@ -5,6 +5,7 @@
         v-for="(choosedItem, index) in choosedItems"
         :key="index"
         :choosedItem="choosedItem"
+        :deleteOption="true"
       ></ChoosedListItem>
     </draggable>
   </ul>

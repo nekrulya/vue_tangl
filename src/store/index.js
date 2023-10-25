@@ -25,6 +25,7 @@ export default createStore({
     filteredParametrsList: {},
     positionChildrenList: {},
     params: {},
+    dialogVisibleFunc: false,
 
     modelsData: [],
     positions: [],
@@ -136,6 +137,9 @@ export default createStore({
     },
     addValueToPosInParams(state, list) {
       state.params[list[0]][list[1]] = list[2];
+    },
+    setDialogVisibleFunc(state, dialogVisibleFunc) {
+      state.dialogVisibleFunc = dialogVisibleFunc;
     },
 
     setModelsData(state, modelsData) {

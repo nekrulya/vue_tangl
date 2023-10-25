@@ -4,7 +4,7 @@
       <div class="choosed_properties__title">Свойства в таблице</div>
       <div class="choosed_properties__buttons">
         <img src="../assets/group.png" alt="group" @click="openGroupCreate" />
-        <img src="../assets/func.png" alt="func" />
+        <img src="../assets/func.png" alt="func" @click="openFuncCreate" />
         <img src="../assets/saved.png" alt="saved" />
       </div>
     </div>
@@ -36,6 +36,7 @@ export default {
       addChoosedProperty: "addChoosedProperty",
       deleteChoosedProperty: "deleteChoosedProperty",
       setDialogVisibleGroup: "setDialogVisibleGroup",
+      setDialogVisibleFunc: "setDialogVisibleFunc",
     }),
     addGroup() {
       this.addChoosedProperty({
@@ -51,6 +52,9 @@ export default {
     },
     openGroupCreate() {
       this.setDialogVisibleGroup(true);
+    },
+    openFuncCreate() {
+      this.setDialogVisibleFunc(true);
     },
   },
 };

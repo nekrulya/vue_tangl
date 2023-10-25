@@ -2,6 +2,7 @@
   <Header></Header>
   <ModalDialog></ModalDialog>
   <ModalDialogGroup></ModalDialogGroup>
+  <ModalDialogFunc></ModalDialogFunc>
   <Main></Main>
 </template>
 
@@ -12,6 +13,7 @@ import ModalDialog from "@/components/ModalDialog.vue";
 import ModalDialogGroup from "@/components/ModalDialogGroup.vue";
 import Main from "@/components/Main.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import ModalDialogFunc from "./components/ModalDialogFunc.vue";
 
 export default {
   components: {
@@ -19,6 +21,7 @@ export default {
     ModalDialog,
     ModalDialogGroup,
     Main,
+    ModalDialogFunc,
   },
   data() {
     return {};

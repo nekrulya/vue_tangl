@@ -12,11 +12,16 @@
         v-for="(item, index) in choosedItem.items"
         :choosedItem="item"
         :key="index"
+        :deleteOption="false"
       ></ChoosedListItem>
     </ul>
   </li>
   <li class="choosed__item" v-if="!choosedItem.isGroup">
-    <ChoosedItem :choosedItem="choosedItem" @dragstart="dragfunc"></ChoosedItem>
+    <ChoosedItem
+      :choosedItem="choosedItem"
+      @dragstart="dragfunc"
+      :deleteOption="deleteOption"
+    ></ChoosedItem>
   </li>
 </template>
 
@@ -28,7 +33,7 @@ export default {
   data() {
     return {};
   },
-  props: ["choosedItem"],
+  props: ["choosedItem", "deleteOption"],
   components: {
     ChoosedItem,
   },

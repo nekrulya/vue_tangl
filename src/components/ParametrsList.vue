@@ -71,7 +71,7 @@ export default {
           .then((response) => {
             this.addValueToPosInParams([
               posChild.id,
-              e.target.name,
+              e.target.value,
               response.data.value,
             ]);
             console.log(response.data);

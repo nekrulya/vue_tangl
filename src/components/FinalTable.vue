@@ -9,6 +9,7 @@
             :key="prop.id"
             :rowspan="prop.isGroup ? 1 : 2"
             :colspan="prop.items?.length"
+            :id="prop.path"
           >
             {{ prop.tableName }}
           </th>
@@ -28,7 +29,8 @@
           <!-- <td>{{ paramId.dbname }}</td> -->
           <template v-for="prop in this.choosedProperties" :key="prop">
             <td v-if="!prop.isGroup">
-              {{ paramId[prop.name] }}
+              {{ paramId[prop.path] }}
+              <!-- {{ prop }} -->
             </td>
             <template v-if="prop.isGroup">
               <td v-for="prp in prop.items" :key="prp">
@@ -101,6 +103,7 @@ export default {
   border: 1px solid black;
   width: 100%;
   min-height: 100vh;
+  overflow-x: scroll;
 }
 
 .res_table {

@@ -54,6 +54,9 @@ export default createStore({
       getParamsValue1:
         "http://192.168.102.197:8000/api/app/parametrs/getParamsValue?position_id=",
       getParamsValue2: "&path=",
+      getParametricValue1:
+        "http://192.168.102.197:8000/api/app/calculations/getParametricValue?expression=",
+      getParametricValue2: "&values=",
     },
   },
   getters: {
@@ -171,7 +174,7 @@ export default createStore({
     },
     deleteChoosedProperty(state, choosedProperty) {
       state.choosedProperties = state.choosedProperties.filter(
-        (property) => property != choosedProperty
+        (property) => property.path != choosedProperty.path
       );
     },
     setPropsToGroup(state, prop) {

@@ -3,7 +3,6 @@
     <div class="content">
       <ModelProperties
         :parametrs="this.filteredParametrsList"
-        @choosePropety="addChooseProperty"
       ></ModelProperties>
       <ChoosedProperties
         :choosedProperties="choosedProperties"

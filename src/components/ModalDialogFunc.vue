@@ -3,16 +3,29 @@
     <div @click.stop class="dialog__content">
       <label>
         Название свойства
-        <input
-          type="text"
-          id="groupName"
-          v-model="groupName"
-          :class="{ groupNameRed: !groupName }"
-        />
+        <input class="input" type="text" id="funcName" v-model="funcName" />
       </label>
-      <ul class="prop__list">
-        <li v-for="prop in choosedProperties" :key="prop.id" :value="prop.id">
-          <input
+      <label>
+        Выражение
+        <input class="input" type="text" id="funcExpr" v-model="funcExpr" />
+      </label>
+      <div class="prop__list">
+        <template v-for="prop in choosedProperties" :key="prop.id">
+          <div
+            v-if="!prop.isGroup"
+            :id="prop.path"
+            class="exprItem"
+            @click="
+              (e) => {
+                funcExpr += e.target.id + ' ';
+                valuesList.push(prop.path);
+              }
+            "
+          >
+            {{ prop.tableName }}
+          </div>
+          <pre> {{ prop }} </pre>
+          <!-- <input
             type="checkbox"
             :id="prop.id"
             :value="prop.id"
@@ -21,67 +34,86 @@
                 e.target.checked ? addProp(prop) : deleteProp(prop);
               }
             "
-          />
-          {{ prop.tableName }}
-        </li>
-      </ul>
-      <button class="addGroup" @click.prevent="addGroup">Добавить</button>
+          /> -->
+          <!-- {{ prop.tableName }} -->
+        </template>
+      </div>
+      <button class="addGroup" @click.prevent="addFunc">Добавить</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: [],
   data() {
-    return { groupName: "" };
+    return { funcName: "", funcExpr: "", valuesList: [] };
   },
   computed: {
     ...mapState({
       dialogVisibleFunc: (state) => state.dialogVisibleFunc,
       choosedProperties: (state) => state.choosedProperties,
       propsToGroup: (state) => state.propsToGroup,
+      params: (state) => state.params,
+      api: (state) => state.api,
+      accessToken: (state) => state.accessToken,
     }),
   },
   methods: {
     ...mapMutations({
       setDialogVisibleFunc: "setDialogVisibleFunc",
-      setChoosedProperties: "setChoosedProperties",
-      setPropsToGroup: "setPropsToGroup",
-      addPropsToGroup: "addPropsToGroup",
-      deletePropsToGroup: "deletePropsToGroup",
       addChoosedProperty: "addChoosedProperty",
-      setDialogVisibleFunc: "setDialogVisibleFunc",
+      addValueToPosInParams: "addValueToPosInParams",
     }),
     // скрыть модальное окно
-    hideDialogGroup() {
-      this.setDialogVisibleGroup(false);
-    },
-    addProp(prop) {
-      this.addPropsToGroup(prop);
-      console.log(this.propsToGroup);
-    },
-    deleteProp(prop) {
-      this.deletePropsToGroup(prop);
-    },
     hideDialogFunc() {
       this.setDialogVisibleFunc(false);
     },
-    // addGroup() {
-    //   const newProp = {
-    //     id: this.groupName,
-    //     name: this.groupName,
-    //     tableName: this.groupName,
-    //     isGroup: true,
-    //     items: this.propsToGroup,
-    //   };
-    //   this.addChoosedProperty(newProp);
-    //   this.setPropsToGroup([]);
-    //   this.groupName = "";
-    //   this.setDialogVisibleGroup(false);
-    // },
+    addFunc() {
+      const newProp = {
+        id: this.funcName,
+        name: this.funcName,
+        tableName: this.funcName,
+        isGroup: false,
+      };
+      this.addChoosedProperty(newProp);
+
+      this.setDialogVisibleFunc(false);
+      let values = {};
+      for (let key of Object.keys(this.params)) {
+        for (let v of this.valuesList) {
+          values[v] = this.params[key][v];
+        }
+        console.log(values);
+
+        axios({
+          method: "get",
+          url: `${
+            this.api.getParametricValue1 +
+            this.funcExpr.trim() +
+            this.api.getParametricValue2 +
+            JSON.stringify(values)
+          }`,
+          params: {},
+          data: {},
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.accessToken}`,
+          },
+        })
+          .then((response) => {
+            let res = [key, newProp.name, response.data.value];
+            this.addValueToPosInParams(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      this.funcName = "";
+    },
   },
 };
 </script>
@@ -158,5 +190,19 @@ export default {
   width: 50%;
   padding: 10px;
   align-self: center;
+}
+
+.input {
+  border: 1px solid teal;
+  margin-bottom: 5px;
+  padding: 5px 8px;
+  width: 100%;
+}
+
+.exprItem {
+  border: 1px solid teal;
+  padding: 5px 8px;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 </style>

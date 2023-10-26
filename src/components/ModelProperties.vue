@@ -65,6 +65,12 @@ export default {
           path: e.target.value,
           isGroup: false,
         });
+        console.log(123, {
+          name: e.target.name,
+          tableName: e.target.name,
+          path: e.target.value,
+          isGroup: false,
+        });
       }
 
       // console.log(this.findPath(e.target));

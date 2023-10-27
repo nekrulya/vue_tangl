@@ -34,7 +34,9 @@
             </td>
             <template v-if="prop.isGroup">
               <td v-for="prp in prop.items" :key="prp">
-                {{ paramId[prp.name] }}
+                {{ paramId[prp.path] }}
+                <!-- <pre>{{ paramId }}</pre>
+                <pre>{{ prp }}</pre> -->
               </td>
             </template>
           </template>

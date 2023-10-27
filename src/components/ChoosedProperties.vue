@@ -3,9 +3,19 @@
     <div class="title_and_buttons">
       <div class="choosed_properties__title">Свойства в таблице</div>
       <div class="choosed_properties__buttons">
-        <img src="../assets/group.png" alt="group" @click="openGroupCreate" />
-        <img src="../assets/func.png" alt="func" @click="openFuncCreate" />
-        <img src="../assets/saved.png" alt="saved" />
+        <img
+          src="../assets/group.png"
+          alt="group"
+          @click="openGroupCreate"
+          class="cp"
+        />
+        <img
+          src="../assets/func.png"
+          alt="func"
+          @click="openFuncCreate"
+          class="cp"
+        />
+        <img src="../assets/saved.png" alt="saved" class="cp" />
       </div>
     </div>
     <div class="choosed_properties__list">
@@ -63,7 +73,7 @@ export default {
 <style scoped>
 .choosed_properties {
   min-height: 100vh;
-  min-width: 267px;
+  min-width: 300px;
   border: 1px solid black;
 }
 .title_and_buttons {
@@ -85,5 +95,8 @@ export default {
 .choosed_properties__list {
   border-top: 1px dashed black;
   padding: 10px 10px 10px 0;
+}
+.cp {
+  cursor: pointer;
 }
 </style>

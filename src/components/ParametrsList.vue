@@ -23,7 +23,7 @@
           :name="key"
           @change="reqParams"
         />
-        {{ key }}
+        {{ key.replaceAll(" ", "_") }}
       </li>
     </template>
   </ul>
@@ -91,6 +91,8 @@ export default {
 }
 
 .parentTitle img {
-  width: 20px;
+  width: 17px;
+  position: relative;
+  top: 3px;
 }
 </style>

@@ -42,7 +42,9 @@ export default {
     }),
     deleteItem(item) {
       this.deleteChoosedProperty(item);
-      document.querySelector(`input[value="${item.path}"]`).checked = false;
+      if (document.querySelector(`input[value="${item.path}"]`)) {
+        document.querySelector(`input[value="${item.path}"]`).checked = false;
+      }
     },
     editProp() {
       this.isEditing = !this.isEditing;

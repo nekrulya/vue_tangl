@@ -6,6 +6,7 @@
       <input
         class="filterInput"
         type="text"
+        placeholder="Поиск..."
         @input="
           (e) =>
             this.setFilteredParametrsList(
@@ -139,6 +140,7 @@ export default {
   font-weight: 400;
   line-height: normal;
   margin-top: 20px;
+  margin-bottom: 20px;
 
   cursor: pointer;
 }
@@ -152,6 +154,7 @@ export default {
 }
 
 .filterInput {
-  border: 1px solid black;
+  border: 1px solid teal;
+  padding: 5px 5px;
 }
 </style>

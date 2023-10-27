@@ -85,6 +85,9 @@ export default {
   display: flex;
   align-items: center;
 }
+.choosed__item {
+  min-width: 250px;
+}
 .choosed__item:hover {
   transform: scale(1.05);
   transition: 0.1s;
@@ -107,7 +110,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   height: 20px;
-  width: 22px;
+  min-width: 22px;
   margin-left: 10px;
 }
 </style>

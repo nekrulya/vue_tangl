@@ -9,23 +9,25 @@
         Выражение
         <input class="input" type="text" id="funcExpr" v-model="funcExpr" />
       </label>
-      <div class="prop__list">
-        <template v-for="prop in choosedProperties" :key="prop.id">
-          <div
-            v-if="!prop.isGroup"
-            :id="prop.path"
-            class="exprItem"
-            @click="
-              (e) => {
-                funcExpr += e.target.id + ' ';
-                valuesList.push(prop.path);
-              }
-            "
-          >
-            {{ prop.tableName }}
-          </div>
-          <pre> {{ prop }} </pre>
-          <!-- <input
+      <!-- {{ this.valuesList }} -->
+      <div class="propsAndBtns">
+        <div class="prop__list">
+          <template v-for="prop in choosedProperties" :key="prop.id">
+            <div
+              v-if="!prop.isGroup"
+              :id="prop.path"
+              class="exprItem"
+              @click="
+                (e) => {
+                  funcExpr += e.target.id.replaceAll(', ', '_') + ' ';
+                  valuesList.push(prop.path);
+                }
+              "
+            >
+              {{ prop.tableName }}
+            </div>
+            <!-- <pre> {{ prop }} </pre> -->
+            <!-- <input
             type="checkbox"
             :id="prop.id"
             :value="prop.id"
@@ -35,8 +37,29 @@
               }
             "
           /> -->
-          <!-- {{ prop.tableName }} -->
-        </template>
+            <!-- {{ prop.tableName }} -->
+          </template>
+        </div>
+        <div class="btns">
+          <div class="btns__row">
+            <div class="btn" @click="addToExpr">+</div>
+            <div class="btn" @click="addToExpr">-</div>
+            <div class="btn" @click="addToExpr">*</div>
+            <div class="btn" @click="addToExpr">/</div>
+          </div>
+          <div class="btns__row">
+            <div class="btn" @click="addToExpr">sin</div>
+            <div class="btn" @click="addToExpr">cos</div>
+            <div class="btn" @click="addToExpr">tan</div>
+            <div class="btn" @click="addToExpr">cot</div>
+          </div>
+          <div class="btns__row">
+            <div class="btn" @click="addToExpr">(</div>
+            <div class="btn" @click="addToExpr">)</div>
+            <div class="btn" @click="addToExpr">**</div>
+            <div class="btn">A</div>
+          </div>
+        </div>
       </div>
       <button class="addGroup" @click.prevent="addFunc">Добавить</button>
     </div>
@@ -74,7 +97,7 @@ export default {
     },
     addFunc() {
       const newProp = {
-        id: this.funcName,
+        path: this.funcName,
         name: this.funcName,
         tableName: this.funcName,
         isGroup: false,
@@ -85,7 +108,7 @@ export default {
       let values = {};
       for (let key of Object.keys(this.params)) {
         for (let v of this.valuesList) {
-          values[v] = this.params[key][v];
+          values[v.replaceAll(", ", "_")] = this.params[key][v];
         }
         console.log(values);
 
@@ -106,6 +129,7 @@ export default {
         })
           .then((response) => {
             let res = [key, newProp.name, response.data.value];
+            console.log(res);
             this.addValueToPosInParams(res);
           })
           .catch((error) => {
@@ -113,12 +137,18 @@ export default {
           });
       }
       this.funcName = "";
+      this.funcExpr = "";
+    },
+    addToExpr(e) {
+      this.funcExpr += e.target.textContent;
     },
   },
 };
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap");
+
 .dialog {
   top: 0;
   bottom: 0;
@@ -131,6 +161,7 @@ export default {
 }
 
 .dialog__content {
+  width: 1000px;
   margin: auto;
   background-color: #fff;
   min-width: 400px;
@@ -178,12 +209,56 @@ export default {
   outline: solid red;
 }
 
+.propsAndBtns {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 20px;
+  width: 100%;
+}
+
 .prop__list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   border: 1px dashed black;
   padding: 10px;
   margin-bottom: 10px;
 }
 
+.btns {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  border: 1px dashed black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.btns__row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+}
+.btn {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: #ebebeb;
+  box-shadow: 5px 5px 10px #a8a8a8, -5px -5px 10px #ffffff;
+
+  color: #000;
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  cursor: pointer;
+}
 .addGroup {
   border: 3px solid teal;
   border-radius: 3px;

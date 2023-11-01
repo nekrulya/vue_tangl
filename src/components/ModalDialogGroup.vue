@@ -11,19 +11,21 @@
         />
       </label>
       <ul class="prop__list">
-        <li v-for="prop in choosedProperties" :key="prop.id" :value="prop.id">
-          <input
-            type="checkbox"
-            :id="prop.id"
-            :value="prop.id"
-            @change="
-              (e) => {
-                e.target.checked ? addProp(prop) : deleteProp(prop);
-              }
-            "
-          />
-          {{ prop.tableName }}
-        </li>
+        <template v-for="prop in choosedProperties" :key="prop.id">
+          <li v-if="!prop.isGroup" :value="prop.id">
+            <input
+              type="checkbox"
+              :id="prop.id"
+              :value="prop.id"
+              @change="
+                (e) => {
+                  e.target.checked ? addProp(prop) : deleteProp(prop);
+                }
+              "
+            />
+            {{ prop.tableName }}
+          </li>
+        </template>
       </ul>
       <button class="addGroup" @click.prevent="addGroup">Добавить</button>
     </div>
@@ -53,6 +55,7 @@ export default {
       addPropsToGroup: "addPropsToGroup",
       deletePropsToGroup: "deletePropsToGroup",
       addChoosedProperty: "addChoosedProperty",
+      deleteChoosedProperty: "deleteChoosedProperty",
     }),
     // скрыть модальное окно
     hideDialogGroup() {
@@ -71,8 +74,15 @@ export default {
         name: this.groupName,
         tableName: this.groupName,
         isGroup: true,
+        path: this.groupName,
         items: this.propsToGroup,
       };
+      for (let p of this.propsToGroup) {
+        this.deleteChoosedProperty(p);
+        if (document.querySelector(`input[value="${p.path}"]`)) {
+          document.querySelector(`input[value="${p.path}"]`).checked = false;
+        }
+      }
       this.addChoosedProperty(newProp);
       this.setPropsToGroup([]);
       this.groupName = "";

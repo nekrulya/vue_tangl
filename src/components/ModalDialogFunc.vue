@@ -26,6 +26,23 @@
             >
               {{ prop.tableName }}
             </div>
+            <template v-else>
+              <!-- <pre>{{ prop.items }}</pre> -->
+              <template v-for="p in prop.items" :key="p.path">
+                <div
+                  :id="p.path"
+                  class="exprItem"
+                  @click="
+                    (e) => {
+                      funcExpr += e.target.id.replaceAll(', ', '_') + ' ';
+                      valuesList.push(p.path);
+                    }
+                  "
+                >
+                  {{ p.tableName }}
+                </div>
+              </template>
+            </template>
             <!-- <pre> {{ prop }} </pre> -->
             <!-- <input
             type="checkbox"

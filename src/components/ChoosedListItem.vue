@@ -8,6 +8,12 @@
         @click="deleteChoosedProperty(choosedItem)"
       />
       <span class="choosed__item__text">{{ choosedItem.tableName }}</span>
+      <img
+        src="../assets/ungroup.png"
+        alt="func"
+        class="cp"
+        @click="ungroup(choosedItem)"
+      />
       <ChoosedListItem
         v-for="(item, index) in choosedItem.items"
         :choosedItem="item"
@@ -65,6 +71,16 @@ export default {
         });
       }
     },
+    ungroup(group) {
+      let children = group.items;
+      for (let child of children) {
+        this.addChoosedProperty(child);
+        if (document.querySelector(`input[value="${child.path}"]`)) {
+          document.querySelector(`input[value="${child.path}"]`).checked = true;
+        }
+      }
+      this.deleteChoosedProperty(group);
+    },
   },
 };
 </script>
@@ -112,5 +128,12 @@ export default {
   height: 20px;
   min-width: 22px;
   margin-left: 10px;
+}
+.cp {
+  height: 18px;
+  margin-left: 4px;
+  position: relative;
+  top: 2px;
+  cursor: pointer;
 }
 </style>

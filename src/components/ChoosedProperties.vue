@@ -15,7 +15,12 @@
           @click="openFuncCreate"
           class="cp"
         />
-        <img src="../assets/saved.png" alt="saved" class="cp" />
+        <img
+          src="../assets/saved.png"
+          alt="saved"
+          class="cp"
+          @click="openFavCreate"
+        />
       </div>
     </div>
     <div class="choosed_properties__list">
@@ -47,6 +52,7 @@ export default {
       deleteChoosedProperty: "deleteChoosedProperty",
       setDialogVisibleGroup: "setDialogVisibleGroup",
       setDialogVisibleFunc: "setDialogVisibleFunc",
+      setDialogVisibleFav: "setDialogVisibleFav",
     }),
     addGroup() {
       this.addChoosedProperty({
@@ -65,6 +71,9 @@ export default {
     },
     openFuncCreate() {
       this.setDialogVisibleFunc(true);
+    },
+    openFavCreate() {
+      this.setDialogVisibleFav(true);
     },
   },
 };

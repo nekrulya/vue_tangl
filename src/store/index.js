@@ -26,6 +26,7 @@ export default createStore({
     positionChildrenList: {},
     params: {},
     dialogVisibleFunc: false,
+    dialogVisibleFav: false,
 
     modelsData: [],
     positions: [],
@@ -57,6 +58,8 @@ export default createStore({
       getParametricValue1:
         "http://192.168.102.197:8000/api/app/calculations/getParametricValue?expression=",
       getParametricValue2: "&values=",
+      getTotal:
+        "http://192.168.102.197:8000/api/app/calculations/getTotal?position_id=",
     },
   },
   getters: {
@@ -143,6 +146,9 @@ export default createStore({
     },
     setDialogVisibleFunc(state, dialogVisibleFunc) {
       state.dialogVisibleFunc = dialogVisibleFunc;
+    },
+    setDialogVisibleFav(state, dialogVisibleFav) {
+      state.dialogVisibleFav = dialogVisibleFav;
     },
 
     setModelsData(state, modelsData) {

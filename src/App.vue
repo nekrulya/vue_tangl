@@ -3,6 +3,7 @@
   <ModalDialog></ModalDialog>
   <ModalDialogGroup></ModalDialogGroup>
   <ModalDialogFunc></ModalDialogFunc>
+  <ModalDialogFavorite></ModalDialogFavorite>
   <Main></Main>
 </template>
 
@@ -14,6 +15,7 @@ import ModalDialogGroup from "@/components/ModalDialogGroup.vue";
 import Main from "@/components/Main.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 import ModalDialogFunc from "./components/ModalDialogFunc.vue";
+import ModalDialogFavorite from "./components/ModalDialogFavorite.vue";
 
 export default {
   components: {
@@ -22,6 +24,7 @@ export default {
     ModalDialogGroup,
     Main,
     ModalDialogFunc,
+    ModalDialogFavorite,
   },
   data() {
     return {};

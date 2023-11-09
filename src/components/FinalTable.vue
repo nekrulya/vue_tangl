@@ -3,7 +3,6 @@
     <table class="res_table" id="res_table">
       <thead class="thead">
         <tr>
-          <!-- <th rowspan="2">Наименование</th> -->
           <th
             v-for="prop in choosedProperties"
             :key="prop.id"
@@ -26,17 +25,13 @@
       </thead>
       <tbody>
         <tr v-for="paramId in this.params" :key="paramId">
-          <!-- <td>{{ paramId.dbname }}</td> -->
           <template v-for="prop in this.choosedProperties" :key="prop">
             <td v-if="!prop.isGroup">
               {{ paramId[prop.path] }}
-              <!-- {{ prop }} -->
             </td>
             <template v-if="prop.isGroup">
               <td v-for="prp in prop.items" :key="prp">
                 {{ paramId[prp.path] }}
-                <!-- <pre>{{ paramId }}</pre>
-                <pre>{{ prp }}</pre> -->
               </td>
             </template>
           </template>

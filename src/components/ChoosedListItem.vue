@@ -1,13 +1,13 @@
 <template>
-  <li class="choosed__item" v-if="choosedItem.isGroup">
-    <ul class="choosed__group">
+  <li class="item" v-if="choosedItem.isGroup">
+    <ul class="group">
       <img
-        class="choosed__item__img"
+        class="img"
         src="../assets/delete.png"
         alt="delete"
         @click="deleteChoosedProperty(choosedItem)"
       />
-      <span class="choosed__item__text">{{ choosedItem.tableName }}</span>
+      <span class="text">{{ choosedItem.tableName }}</span>
       <img
         src="../assets/ungroup.png"
         alt="func"
@@ -36,24 +36,29 @@ import ChoosedItem from "./ChoosedItem.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  data() {
-    return {};
-  },
   props: ["choosedItem", "deleteOption"],
+
   components: {
     ChoosedItem,
   },
+
+  data() {
+    return {};
+  },
+
   methods: {
     ...mapMutations({
       addChoosedProperty: "addChoosedProperty",
       deleteChoosedProperty: "deleteChoosedProperty",
     }),
+
     deleteItem(item) {
       this.deleteChoosedProperty(item);
       for (item in choosedItem.items) {
         document.querySelector(`#${item.id}`).checked = false;
       }
     },
+
     dragfunc(e) {
       let selected = e.target;
 
@@ -71,6 +76,7 @@ export default {
         });
       }
     },
+
     ungroup(group) {
       let children = group.items;
       for (let child of children) {
@@ -86,36 +92,32 @@ export default {
 </script>
 
 <style scoped>
-.choosed__group {
+.group {
   border-left: 1px solid black;
   padding-left: 3px;
   position: relative;
   left: -4px;
 }
-.choosed__group:hover {
+.group:hover {
   transform: scale(1.05);
   transition: 0.1s;
   cursor: pointer;
 }
-.cont {
-  display: flex;
-  align-items: center;
-}
-.choosed__item {
+.item {
   min-width: 250px;
 }
-.choosed__item:hover {
+.item:hover {
   transform: scale(1.05);
   transition: 0.1s;
   cursor: pointer;
 }
-.choosed__item__img {
+.img {
   height: 20px;
   margin-right: 4px;
   position: relative;
   top: 2px;
 }
-.choosed__item__text {
+.text {
   display: inline-block;
   padding: 4px 8px;
   background-color: #8f84d1;

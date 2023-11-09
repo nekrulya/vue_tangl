@@ -1,8 +1,8 @@
 <template>
   <div class="choosed_properties">
     <div class="title_and_buttons">
-      <div class="choosed_properties__title">Свойства в таблице</div>
-      <div class="choosed_properties__buttons">
+      <div class="title">Свойства в таблице</div>
+      <div class="buttons">
         <img
           src="../assets/group.png"
           alt="group"
@@ -23,7 +23,7 @@
         />
       </div>
     </div>
-    <div class="choosed_properties__list">
+    <div class="list">
       <ChoosedList :choosedItems="choosedProperties"></ChoosedList>
     </div>
   </div>
@@ -37,41 +37,34 @@ export default {
   components: {
     ChoosedList,
   },
+
+  props: [],
+
+  data() {
+    return {};
+  },
+
   computed: {
     ...mapState({
       choosedProperties: (state) => state.choosedProperties,
     }),
   },
-  props: [],
-  data() {
-    return {};
-  },
+
   methods: {
     ...mapMutations({
-      addChoosedProperty: "addChoosedProperty",
-      deleteChoosedProperty: "deleteChoosedProperty",
       setDialogVisibleGroup: "setDialogVisibleGroup",
       setDialogVisibleFunc: "setDialogVisibleFunc",
       setDialogVisibleFav: "setDialogVisibleFav",
     }),
-    addGroup() {
-      this.addChoosedProperty({
-        name: "без названия",
-        id: null,
-        isGroup: true,
-        items: [
-          { name: "1", id: null, isGroup: false },
-          { name: "2", id: null, isGroup: false },
-          { name: "3", id: null, isGroup: false },
-        ],
-      });
-    },
+
     openGroupCreate() {
       this.setDialogVisibleGroup(true);
     },
+
     openFuncCreate() {
       this.setDialogVisibleFunc(true);
     },
+
     openFavCreate() {
       this.setDialogVisibleFav(true);
     },
@@ -88,20 +81,20 @@ export default {
 .title_and_buttons {
   padding: 12px 10px;
 }
-.choosed_properties__title {
+.title {
   color: #000;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
-.choosed_properties__buttons {
+.buttons {
   margin-top: 10px;
   display: flex;
   width: 35%;
   justify-content: space-between;
 }
-.choosed_properties__list {
+.list {
   border-top: 1px dashed black;
   padding: 10px 10px 10px 0;
 }

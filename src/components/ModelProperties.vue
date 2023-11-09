@@ -1,8 +1,8 @@
 <template>
   <div class="model_properties" @change="choosePropety">
     <div class="title_and_hide">
-      <div class="model_properties__title">Свойства в модели</div>
-      <div class="model_properties__hide" @click="hideAll">свернуть всё</div>
+      <div class="title">Свойства в модели</div>
+      <div class="hide" @click="hideAll">свернуть всё</div>
       <input
         class="filterInput"
         type="text"
@@ -20,7 +20,6 @@
       />
     </div>
     <div class="properties">
-      <!-- <pre>{{ filterParametrs(parametrs, "adsk", this.filterParametrs) }}</pre> -->
       <ParametrsList :parametrs="parametrs" :path="'root'" />
     </div>
   </div>
@@ -31,9 +30,16 @@ import ParametrsList from "@/components/ParametrsList.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
+  props: ["parametrs"],
+
   components: {
     ParametrsList,
   },
+
+  data() {
+    return {};
+  },
+
   computed: {
     ...mapState({
       isAuth: (state) => state.isAuth,
@@ -41,16 +47,14 @@ export default {
     }),
     ...mapGetters({ filterParametrs1: "getFilteredParametrsList" }),
   },
-  props: ["parametrs"],
-  data() {
-    return {};
-  },
+
   methods: {
     ...mapMutations({
       addChoosedProperty: "addChoosedProperty",
       deleteChoosedProperty: "deleteChoosedProperty",
       setFilteredParametrsList: "setFilteredParametrsList",
     }),
+
     choosePropety(e) {
       if (e.target.checked) {
         this.addChoosedProperty({
@@ -66,26 +70,8 @@ export default {
           path: e.target.value,
           isGroup: false,
         });
-        console.log(123, {
-          name: e.target.name,
-          tableName: e.target.name,
-          path: e.target.value,
-          isGroup: false,
-        });
       }
-
-      // console.log(this.findPath(e.target));
     },
-
-    // findPath(element) {
-    //   let path = "";
-    //   path += element
-    //     .closest(".parametrsItem")
-    //     .querySelector(".parentTitle").textContent;
-    //   console.log(element.closest(".parametrs"));
-    //   path += " " + this.findPath(element.closest(".parametrs"));
-    //   return path;
-    // },
 
     hideAll(e) {
       const uls = document.querySelectorAll(".parametrs");
@@ -126,14 +112,14 @@ export default {
 .title_and_hide {
   padding: 12px 10px;
 }
-.model_properties__title {
+.title {
   color: #000;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
-.model_properties__hide {
+.hide {
   color: #436caa;
   font-size: 12px;
   font-style: normal;

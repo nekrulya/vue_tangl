@@ -9,7 +9,6 @@
         Выражение
         <input class="input" type="text" id="funcExpr" v-model="funcExpr" />
       </label>
-      <!-- {{ this.valuesList }} -->
       <div class="propsAndBtns">
         <div class="prop__list">
           <template v-for="prop in choosedProperties" :key="prop.id">
@@ -27,7 +26,6 @@
               {{ prop.tableName }}
             </div>
             <template v-else>
-              <!-- <pre>{{ prop.items }}</pre> -->
               <template v-for="p in prop.items" :key="p.path">
                 <div
                   :id="p.path"
@@ -43,18 +41,6 @@
                 </div>
               </template>
             </template>
-            <!-- <pre> {{ prop }} </pre> -->
-            <!-- <input
-            type="checkbox"
-            :id="prop.id"
-            :value="prop.id"
-            @change="
-              (e) => {
-                e.target.checked ? addProp(prop) : deleteProp(prop);
-              }
-            "
-          /> -->
-            <!-- {{ prop.tableName }} -->
           </template>
         </div>
         <div class="btns">
@@ -89,9 +75,11 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: [],
+
   data() {
     return { funcName: "", funcExpr: "", valuesList: [] };
   },
+
   computed: {
     ...mapState({
       dialogVisibleFunc: (state) => state.dialogVisibleFunc,
@@ -102,16 +90,19 @@ export default {
       accessToken: (state) => state.accessToken,
     }),
   },
+
   methods: {
     ...mapMutations({
       setDialogVisibleFunc: "setDialogVisibleFunc",
       addChoosedProperty: "addChoosedProperty",
       addValueToPosInParams: "addValueToPosInParams",
     }),
+
     // скрыть модальное окно
     hideDialogFunc() {
       this.setDialogVisibleFunc(false);
     },
+
     addFunc() {
       const newProp = {
         path: this.funcName,
@@ -120,8 +111,8 @@ export default {
         isGroup: false,
       };
       this.addChoosedProperty(newProp);
-
       this.setDialogVisibleFunc(false);
+
       let values = {};
       for (let key of Object.keys(this.params)) {
         for (let v of this.valuesList) {
@@ -153,9 +144,11 @@ export default {
             console.log(error);
           });
       }
+
       this.funcName = "";
       this.funcExpr = "";
     },
+
     addToExpr(e) {
       this.funcExpr += e.target.textContent;
     },

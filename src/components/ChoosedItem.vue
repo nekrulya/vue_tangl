@@ -1,22 +1,18 @@
 <template>
-  <li class="choosed__item">
+  <li class="item">
     <img
-      class="choosed__item__img"
+      class="img"
       src="../assets/delete.png"
       alt="delete"
       @click="deleteItem(choosedItem)"
       v-if="deleteOption"
     />
-    <div
-      class="choosed__item__text"
-      :id="choosedItem.path"
-      v-if="!this.isEditing"
-    >
+    <div class="text" :id="choosedItem.path" v-if="!this.isEditing">
       {{ choosedItem.tableName }}
     </div>
     <input
       type="text"
-      v-if="this.isEditing"
+      v-else
       class="inputEdit"
       :value="choosedItem.name"
       @keydown.enter="changePropName"
@@ -32,24 +28,28 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: ["choosedItem", "deleteOption"],
+
   data() {
     return { isEditing: false };
   },
+
   methods: {
     ...mapMutations({
-      addChoosedProperty: "addChoosedProperty",
       deleteChoosedProperty: "deleteChoosedProperty",
     }),
+
     deleteItem(item) {
       this.deleteChoosedProperty(item);
       if (document.querySelector(`input[value="${item.path}"]`)) {
         document.querySelector(`input[value="${item.path}"]`).checked = false;
       }
     },
+
     editProp() {
       this.isEditing = !this.isEditing;
       console.log(this.isEditing);
     },
+
     changePropName(e) {
       this.choosedItem.tableName = e.target.value;
       this.isEditing = false;
@@ -59,18 +59,18 @@ export default {
 </script>
 
 <style scoped>
-.choosed__item {
+.item {
   display: flex;
   width: fit-content;
   align-items: center;
 }
 
-.choosed__item__img {
+.img {
   height: 20px;
   margin-right: 4px;
 }
 
-.choosed__item__text {
+.text {
   padding: 4px 8px;
   background-color: #cfcce2;
   border-radius: 3px;

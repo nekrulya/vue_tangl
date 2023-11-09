@@ -4,8 +4,6 @@
       <h2 class="title">Выберите избранное своство</h2>
       <div class="favs">
         <div class="favs__item" @click="addTotal">Общее количество</div>
-        <div class="favs__item">Тотал</div>
-        <div class="favs__item">Тотал</div>
       </div>
     </div>
   </div>
@@ -17,9 +15,11 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: [],
+
   data() {
     return { favName: "", favExpr: "" };
   },
+
   computed: {
     ...mapState({
       dialogVisibleFav: (state) => state.dialogVisibleFav,
@@ -30,19 +30,19 @@ export default {
       accessToken: (state) => state.accessToken,
     }),
   },
+
   methods: {
     ...mapMutations({
       setDialogVisibleFav: "setDialogVisibleFav",
       addChoosedProperty: "addChoosedProperty",
       addValueToPosInParams: "addValueToPosInParams",
     }),
+
     // скрыть модальное окно
     hideDialogFav() {
       this.setDialogVisibleFav(false);
     },
-    // chooseFavName(e){
-    //     this.favName = e.target.value
-    // },
+
     addTotal(e) {
       this.favName = e.target.textContent;
       const newProp = {
@@ -52,8 +52,8 @@ export default {
         isGroup: false,
       };
       this.addChoosedProperty(newProp);
-
       this.setDialogVisibleFav(false);
+
       let values = {};
       for (let key of Object.keys(this.params)) {
         axios({

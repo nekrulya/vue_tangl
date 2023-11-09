@@ -37,9 +37,11 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: [],
+
   data() {
     return { groupName: "" };
   },
+
   computed: {
     ...mapState({
       dialogVisibleGroup: (state) => state.dialogVisibleGroup,
@@ -47,6 +49,7 @@ export default {
       propsToGroup: (state) => state.propsToGroup,
     }),
   },
+
   methods: {
     ...mapMutations({
       setDialogVisibleGroup: "setDialogVisibleGroup",
@@ -57,17 +60,21 @@ export default {
       addChoosedProperty: "addChoosedProperty",
       deleteChoosedProperty: "deleteChoosedProperty",
     }),
+
     // скрыть модальное окно
     hideDialogGroup() {
       this.setDialogVisibleGroup(false);
     },
+
     addProp(prop) {
       this.addPropsToGroup(prop);
       console.log(this.propsToGroup);
     },
+
     deleteProp(prop) {
       this.deletePropsToGroup(prop);
     },
+
     addGroup() {
       const newProp = {
         id: this.groupName,

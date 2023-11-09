@@ -35,9 +35,11 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: ["parametrs", "path"],
+
   data() {
     return {};
   },
+
   computed: {
     ...mapState({
       accessToken: (state) => state.accessToken,
@@ -46,11 +48,13 @@ export default {
       positionChildrenList: (state) => state.positionChildrenList,
     }),
   },
+
   methods: {
     ...mapMutations({
       setAccessToken: "setAccessToken",
       addValueToPosInParams: "addValueToPosInParams",
     }),
+
     reqParams(e) {
       for (let posChild of this.positionChildrenList) {
         axios({

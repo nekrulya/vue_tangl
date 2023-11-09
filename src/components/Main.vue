@@ -1,6 +1,6 @@
 <template>
   <main class="main">
-    <div class="content">
+    <div class="content" v-if="this.isAuth">
       <ModelProperties
         :parametrs="this.filteredParametrsList"
       ></ModelProperties>
@@ -18,11 +18,22 @@ import ModelProperties from "@/components/ModelProperties.vue";
 import ChoosedProperties from "@/components/ChoosedProperties.vue";
 import FinalTable from "@/components/FinalTable.vue";
 import Loader from "@/components/Loader.vue";
-
-import { mapState } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: [],
+
+  components: {
+    ModelProperties,
+    ChoosedProperties,
+    FinalTable,
+    Loader,
+  },
+
+  data() {
+    return {};
+  },
+
   computed: {
     ...mapState({
       isAuth: (state) => state.isAuth,
@@ -30,15 +41,7 @@ export default {
       filteredParametrsList: (state) => state.filteredParametrsList,
     }),
   },
-  components: {
-    ModelProperties,
-    ChoosedProperties,
-    FinalTable,
-    Loader,
-  },
-  data() {
-    return {};
-  },
+
   methods: {
     addChooseProperty(item) {
       this.choosedProperties.push(item);

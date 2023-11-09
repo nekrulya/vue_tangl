@@ -1,33 +1,34 @@
 <template>
   <Header></Header>
-  <ModalDialog></ModalDialog>
-  <ModalDialogGroup></ModalDialogGroup>
-  <ModalDialogFunc></ModalDialogFunc>
-  <ModalDialogFavorite></ModalDialogFavorite>
+  <Modals></Modals>
   <Main></Main>
 </template>
 
 <script>
 import axios from "axios";
 import Header from "@/components/Header.vue";
-import ModalDialog from "@/components/ModalDialog.vue";
-import ModalDialogGroup from "@/components/ModalDialogGroup.vue";
 import Main from "@/components/Main.vue";
+import Modals from "@/components/Modals/Modal.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-import ModalDialogFunc from "./components/ModalDialogFunc.vue";
-import ModalDialogFavorite from "./components/ModalDialogFavorite.vue";
 
 export default {
   components: {
     Header,
-    ModalDialog,
-    ModalDialogGroup,
     Main,
-    ModalDialogFunc,
-    ModalDialogFavorite,
+    Modals,
   },
   data() {
     return {};
+  },
+  computed: {
+    ...mapState({
+      dialogVisible: (state) => state.dialogVisible,
+      accessToken: (state) => state.accessToken,
+      isAuth: (state) => state.isAuth,
+      username: (state) => state.username,
+      api: (state) => state.api,
+      companies: (state) => state.companies,
+    }),
   },
   methods: {
     ...mapMutations({
@@ -42,16 +43,6 @@ export default {
       localStorage.username = "";
       localStorage.accessToken = "";
     },
-  },
-  computed: {
-    ...mapState({
-      dialogVisible: (state) => state.dialogVisible,
-      accessToken: (state) => state.accessToken,
-      isAuth: (state) => state.isAuth,
-      username: (state) => state.username,
-      api: (state) => state.api,
-      companies: (state) => state.companies,
-    }),
   },
   mounted() {
     if (localStorage.accessToken) {

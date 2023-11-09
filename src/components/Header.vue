@@ -1,26 +1,26 @@
 <template>
   <header class="header">
-    <div class="header__title">Создание ведомости объемов работ</div>
-    <form class="header__form" v-if="!isAuth">
+    <div class="title">Создание ведомости объемов работ</div>
+    <form class="form" v-if="!isAuth">
       <label>
         Login
-        <input class="header__login" type="text" v-model="login" />
+        <input class="login" type="text" v-model="login" />
       </label>
       <label>
         Password
-        <input class="header__pswd" type="password" v-model="password" />
+        <input class="pswd" type="password" v-model="password" />
       </label>
       <button
-        class="header_btn"
+        class="btn"
         @click.prevent="loginTangle(this.login, this.password)"
       >
         Войти
       </button>
     </form>
-    <div class="logout" v-if="isAuth">
+    <div class="logout" v-else>
       <span>{{ this.username }}</span>
       <button @click.prevent="openModal" class="open_modal">Настроить</button>
-      <button @click.prevent="logOut">Выйти</button>
+      <button @click.prevent="this.logout(1)">Выйти</button>
     </div>
   </header>
 </template>
@@ -54,7 +54,9 @@ export default {
       setUsername: "setUsername",
       setCompanies: "setCompanies",
       setDialogVisible: "setDialogVisible",
+      logout: "logout",
     }),
+
     // войти в аккаунт
     async loginTangle() {
       axios({
@@ -83,23 +85,22 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
 
-      // this.setAccessToken("04tu0b3n[guern0[gj39nj9j49ut]]");
-      // this.setIsAyth(true);
-      // this.updateCompanies(this.accessToken);
-    },
     // выйти из аккаунта
-    logOut() {
-      this.login = "";
-      this.setAccessToken("");
-      this.setIsAyth(false);
-      localStorage.username = "";
-      localStorage.accessToken = "";
-    },
+    // logOut() {
+    //   this.login = "";
+    //   this.setAccessToken("");
+    //   this.setIsAyth(false);
+    //   localStorage.username = "";
+    //   localStorage.accessToken = "";
+    // },
+
     // открыть модальное окно выбора
     openModal() {
       this.setDialogVisible(true);
     },
+
     // получить список компаний
     updateCompanies(accessToken) {
       axios({
@@ -118,10 +119,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-
-      // this.setCompanies([
-      //   { company_name: "Третий трест", isPersonal: false, company_id: 123 },
-      // ]);
     },
   },
 };
@@ -140,7 +137,7 @@ export default {
   padding: 10px 30px;
 }
 
-.header__form {
+.form {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -148,8 +145,8 @@ export default {
   font-size: 18px;
 }
 
-.header__login,
-.header__pswd {
+.login,
+.pswd {
   background-color: #fff;
   color: #000;
   padding: 5px;
@@ -157,7 +154,7 @@ export default {
   border-radius: 5px;
 }
 
-.header_btn {
+.btn {
   background-color: rgba(89, 233, 225, 0.5);
   width: 200px;
   border-radius: 5px;

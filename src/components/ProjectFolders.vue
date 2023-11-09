@@ -26,49 +26,25 @@ import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: ["folders"],
+
   data() {
     return {};
   },
+
   computed: {
     ...mapState({
       accessToken: (state) => state.accessToken,
-      models: (state) => state.models,
-      choosedModel: (state) => state.choosedModel,
       choosedModelId: (state) => state.choosedModelId,
-      choosedModelId: (state) => state.choosedModelId,
-      catalogs: (state) => state.catalogs,
-      modelsData: (state) => state.modelsData,
-      positions: (state) => state.positions,
-      choosedPosition: (state) => state.choosedPosition,
-      odata: (state) => state.odata,
-      metaTree: (state) => state.metaTree,
-      choosedMetaTree: (state) => state.choosedMetaTree,
-      params: (state) => state.params,
       api: (state) => state.api,
     }),
   },
+
   methods: {
     ...mapMutations({
-      setAccessToken: "setAccessToken",
-      setIsAyth: "setIsAuth",
-      setCompanies: "setCompanies",
-      setChoosedCompany: "setChoosedCompany",
-      setChoosedCompanyId: "setChoosedCompanyId",
-      setDialogVisible: "setDialogVisible",
-      setProjects: "setProjects",
-      setChoosedProject: "setChoosedProject",
-      setChoosedProjectId: "setChoosedProjectId",
-      setFolders: "setFolders",
       setChoosedModelId: "setChoosedModelId",
       setCatalogs: "setCatalogs",
-      setModelsData: "setModelsData",
-      setPositions: "setPositions",
-      setChoosedPosition: "setChoosedPosition",
-      setOdata: "setOdata",
-      setMetaTree: "setMetaTree",
-      setChoosedMetaTree: "setChoosedMetaTree",
-      setParams: "setParams",
     }),
+
     updateCatalogs(e) {
       this.setChoosedModelId(e.target.value);
       axios({

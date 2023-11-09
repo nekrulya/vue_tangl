@@ -78,6 +78,31 @@ export default createStore({
     setIsAuth(state, isAuth) {
       state.isAuth = isAuth;
     },
+    logout(state, prop) {
+      state.isAuth = false;
+      state.accessToken = "";
+      state.username = "";
+      state.companies = [];
+      state.choosedCompany = "";
+      state.choosedCompanyId = 0;
+      state.dialogVisible = false;
+      state.dialogVisibleGroup = false;
+      state.projects = [];
+      state.choosedProject = "";
+      state.choosedProjectId = 0;
+      state.folders = [];
+      state.choosedModelId = 0;
+      state.catalogs = [];
+      state.choosedCatalogId = 0;
+      state.positionList = {};
+      state.choosedPositionId = 0;
+      state.positionChildrenList = {};
+      state.parametrsList = {};
+      state.filteredParametrsList = {};
+      state.choosedProperties = [];
+      state.propsToGroup = [];
+      state.params = {};
+    },
     setAccessToken(state, accessToken) {
       state.accessToken = accessToken;
     },
@@ -92,9 +117,6 @@ export default createStore({
     },
     setChoosedCompanyId(state, choosedCompanyId) {
       state.choosedCompanyId = choosedCompanyId;
-    },
-    setProperties(state, properties) {
-      state.properties = properties;
     },
     setDialogVisible(state, dialogVisible) {
       state.dialogVisible = dialogVisible;
@@ -149,28 +171,6 @@ export default createStore({
     },
     setDialogVisibleFav(state, dialogVisibleFav) {
       state.dialogVisibleFav = dialogVisibleFav;
-    },
-
-    setModelsData(state, modelsData) {
-      state.modelsData = modelsData;
-    },
-    setPositions(state, positions) {
-      state.positions = positions;
-    },
-    // setChoosedPosition(state, choosedPosition) {
-    //   state.choosedPosition = choosedPosition;
-    // },
-    setOdata(state, odata) {
-      state.odata = odata;
-    },
-    setMetaTree(state, metaTree) {
-      state.metaTree = metaTree;
-    },
-    setChoosedMetaTree(state, choosedMetaTree) {
-      state.choosedMetaTree = choosedMetaTree;
-    },
-    setParams(state, params) {
-      state.params = params;
     },
     setChoosedProperties(state, choosedProperties) {
       state.choosedProperties = choosedProperties;

@@ -10,7 +10,7 @@
             :colspan="prop.items?.length"
             :id="prop.path"
           >
-            {{ prop.tableName }}
+            {{ prop.tableName.replaceAll("_", " ") }}
           </th>
         </tr>
         <tr>

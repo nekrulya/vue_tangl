@@ -20,10 +20,10 @@
         <input
           type="checkbox"
           :value="path + ', ' + key"
-          :name="key"
+          :name="key.replaceAll(' ', '_')"
           @change="reqParams"
         />
-        {{ key.replaceAll(" ", "_") }}
+        {{ key.replaceAll("_", " ") }}
       </li>
     </template>
   </ul>

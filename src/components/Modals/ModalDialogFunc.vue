@@ -18,12 +18,14 @@
               class="exprItem"
               @click="
                 (e) => {
-                  funcExpr += e.target.id.replaceAll(', ', '_') + ' ';
+                  funcExpr +=
+                    e.target.id.replaceAll(', ', '_').replaceAll(' ', '_') +
+                    ' ';
                   valuesList.push(prop.path);
                 }
               "
             >
-              {{ prop.tableName }}
+              {{ prop.tableName.replace("_", " ") }}
             </div>
             <template v-else>
               <template v-for="p in prop.items" :key="p.path">
@@ -32,12 +34,14 @@
                   class="exprItem"
                   @click="
                     (e) => {
-                      funcExpr += e.target.id.replaceAll(', ', '_') + ' ';
-                      valuesList.push(p.path);
+                      funcExpr +=
+                        e.target.id.replaceAll(', ', '_').replaceAll(' ', '_') +
+                        ' ';
+                      valuesList.push(p.path.replaceAll(' ', '_'));
                     }
                   "
                 >
-                  {{ p.tableName }}
+                  {{ p.tableName.replace("_", " ") }}
                 </div>
               </template>
             </template>
@@ -116,7 +120,8 @@ export default {
       let values = {};
       for (let key of Object.keys(this.params)) {
         for (let v of this.valuesList) {
-          values[v.replaceAll(", ", "_")] = this.params[key][v];
+          values[v.replaceAll(", ", "_").replaceAll(" ", "_")] =
+            this.params[key][v];
         }
         console.log(values);
 
@@ -150,7 +155,7 @@ export default {
     },
 
     addToExpr(e) {
-      this.funcExpr += e.target.textContent;
+      this.funcExpr += e.target.textContent.replaceAll(" ", "_");
     },
   },
 };

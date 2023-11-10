@@ -8,7 +8,7 @@
       v-if="deleteOption"
     />
     <div class="text" :id="choosedItem.path" v-if="!this.isEditing">
-      {{ choosedItem.tableName }}
+      {{ choosedItem.tableName.replaceAll("_", " ") }}
     </div>
     <input
       type="text"

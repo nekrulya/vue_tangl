@@ -1,32 +1,16 @@
 <template>
-  <ul class="parametrs">
-    <template v-for="[key, v] of Object.entries(parametrs)" :key="key">
-      <li v-if="typeof v === 'object'" class="parametrsItem">
-        <div
-          class="parentTitle"
-          @click="
-            (e) => {
-              e.target.closest('.parentTitle').nextElementSibling.hidden =
-                !e.target.closest('.parentTitle').nextElementSibling.hidden;
-            }
-          "
-        >
-          {{ key }}
-          <img :src="'/img/caret-down.png'" alt="" />
-        </div>
-        <ParametrsList :parametrs="v" :path="path + ', ' + key" />
-      </li>
-      <li v-else class="model__item">
-        <input
-          type="checkbox"
-          :value="path + ', ' + key"
-          :name="key.replaceAll(' ', '_')"
-          @change="reqParams"
-        />
-        {{ key.replaceAll("_", " ") }}
-      </li>
-    </template>
-  </ul>
+  <li class="model__item">
+    <label>
+      <input
+        type="checkbox"
+        :value="path + ', ' + name"
+        :name="name.replaceAll(' ', '_')"
+        @change="reqParams"
+        :checked="isChecked"
+      />
+      {{ name.replaceAll("_", " ") }}
+    </label>
+  </li>
 </template>
 
 <script>
@@ -34,7 +18,7 @@ import axios from "axios";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  props: ["parametrs", "path"],
+  props: ["path", "name", "isChecked"],
 
   data() {
     return {};
@@ -56,6 +40,7 @@ export default {
     }),
 
     reqParams(e) {
+      this.$emit("changeIsChecked", { this: this });
       for (let posChild of this.positionChildrenList) {
         axios({
           method: "get",
@@ -89,14 +74,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.parentTitle {
-  cursor: pointer;
-}
-
-.parentTitle img {
-  width: 17px;
-  position: relative;
-  top: 3px;
-}
-</style>
+<style scoped></style>

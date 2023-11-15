@@ -3,13 +3,13 @@
     <ul class="group">
       <img
         class="img"
-        src="../assets/delete.png"
+        src="@/assets/delete.png"
         alt="delete"
         @click="deleteChoosedProperty(choosedItem)"
       />
       <span class="text">{{ choosedItem.tableName }}</span>
       <img
-        src="../assets/ungroup.png"
+        src="@/assets/ungroup.png"
         alt="func"
         class="cp"
         @click="ungroup(choosedItem)"

@@ -2,7 +2,7 @@
   <li class="item">
     <img
       class="img"
-      src="../assets/delete.png"
+      src="@/assets/delete.png"
       alt="delete"
       @click="deleteItem(choosedItem)"
       v-if="deleteOption"
@@ -18,7 +18,7 @@
       @keydown.enter="changePropName"
     />
     <div class="arrows">
-      <img src="../assets/edit.png" alt="edit prop" @click="editProp" />
+      <img src="@/assets/edit.png" alt="edit prop" @click="editProp" />
     </div>
   </li>
 </template>

@@ -23,6 +23,19 @@
 import axios from "axios";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
+function changedData(data) {
+  let newData = {};
+  for (let [key, value] of Object.entries(data)) {
+    if (typeof value == "object") {
+      newData[key] = value;
+      changedData(value);
+    } else {
+      newData[key] = { isChecked: false };
+    }
+  }
+  return newData;
+}
+
 export default {
   props: ["positions"],
   data() {
@@ -48,9 +61,13 @@ export default {
       setPositionChildrenList: "setPositionChildrenList",
       addPosToParams: "addPosToParams",
       addValueToPosInParams: "addValueToPosInParams",
+      setChoosedProperties: "setChoosedProperties",
     }),
     updateParametrsList(e) {
       this.setChoosedPositionId(e.target.value);
+      this.setChoosedProperties([]);
+      this.setParametrsList({});
+      this.setFilteredParametrsList({});
       axios({
         method: "get",
         url: `${
@@ -67,6 +84,10 @@ export default {
         },
       })
         .then((response) => {
+          let newData1 = changedData(response.data);
+          // this.setParametrsList(newData1);
+          // this.setFilteredParametrsList(newData1);
+          // console.log(newData1);
           this.setParametrsList(response.data);
           this.setFilteredParametrsList(response.data);
           console.log(response.data);

@@ -5,6 +5,7 @@
         :parametrs="this.filteredParametrsList"
       ></ModelProperties>
       <ChoosedProperties
+        v-if="this.choosedProperties.length > 0"
         :choosedProperties="choosedProperties"
       ></ChoosedProperties>
       <FinalTable></FinalTable>
@@ -14,8 +15,8 @@
 </template>
 
 <script>
-import ModelProperties from "@/components/ModelProperties.vue";
-import ChoosedProperties from "@/components/ChoosedProperties.vue";
+import ModelProperties from "@/components/ParamsList/ModelProperties.vue";
+import ChoosedProperties from "@/components/ChoosedParamsList/ChoosedProperties.vue";
 import FinalTable from "@/components/FinalTable.vue";
 import Loader from "@/components/Loader.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
@@ -39,6 +40,7 @@ export default {
       isAuth: (state) => state.isAuth,
       parametrsList: (state) => state.parametrsList,
       filteredParametrsList: (state) => state.filteredParametrsList,
+      choosedProperties: (state) => state.choosedProperties,
     }),
   },
 

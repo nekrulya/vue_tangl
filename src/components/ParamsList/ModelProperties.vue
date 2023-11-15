@@ -13,7 +13,10 @@
               filterParametrs(
                 this.parametrsList,
                 e.target.value,
-                filterParametrs
+                filterParametrs,
+                'root',
+                this.choosedProperties,
+                getChoosedPropertiesSet()
               )
             )
         "
@@ -26,7 +29,7 @@
 </template>
 
 <script>
-import ParametrsList from "@/components/ParametrsList.vue";
+import ParametrsList from "@/components/ParamsList/ParametrsList.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
@@ -44,6 +47,7 @@ export default {
     ...mapState({
       isAuth: (state) => state.isAuth,
       parametrsList: (state) => state.parametrsList,
+      choosedProperties: (state) => state.choosedProperties,
     }),
     ...mapGetters({ filterParametrs1: "getFilteredParametrsList" }),
   },
@@ -80,16 +84,43 @@ export default {
       }
     },
 
-    filterParametrs: (parametrs, key, func) => {
+    getChoosedPropertiesSet() {
+      let set1 = new Set();
+
+      for (let item of this.choosedProperties) {
+        set1.add(item.path);
+      }
+      return set1;
+    },
+
+    filterParametrs: (
+      parametrs,
+      key,
+      func,
+      path,
+      choosedProperties,
+      checkedSet
+    ) => {
       const newParametrs = {};
+
       for (const [k, v] of Object.entries(parametrs)) {
         if (typeof v === "object") {
-          const obj = func(v, key, func);
+          const obj = func(
+            v,
+            key,
+            func,
+            path + ", " + k,
+            choosedProperties,
+            checkedSet
+          );
           if (Object.keys(obj).length > 0) {
             newParametrs[k] = obj;
           }
         } else {
-          if (k.toLowerCase().includes(key.toLowerCase())) {
+          if (
+            k.toLowerCase().includes(key.toLowerCase()) ||
+            checkedSet.has(path + ", " + k)
+          ) {
             newParametrs[k] = 1;
           }
         }

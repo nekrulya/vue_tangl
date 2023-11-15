@@ -27,12 +27,8 @@ export default createStore({
     params: {},
     dialogVisibleFunc: false,
     dialogVisibleFav: false,
+    paramsLevels: [],
 
-    modelsData: [],
-    positions: [],
-    odata: [],
-    metaTree: [],
-    choosedMetaTree: [],
     choosedProperties: [],
     propsToGroup: [],
     api: {
@@ -60,6 +56,11 @@ export default createStore({
       getParametricValue2: "&values=",
       getTotal:
         "http://192.168.102.197:8000/api/app/calculations/getTotal?position_id=",
+      getLevels:
+        "http://192.168.102.197:8000/api/app/calculations/getLevels?model_id=",
+      getElementTotalByLevel1:
+        "http://192.168.102.197:8000/api/app/calculations/getElementTotalByLevel?position_id=",
+      getElementTotalByLevel2: "&level_name=",
     },
   },
   getters: {
@@ -193,6 +194,9 @@ export default createStore({
       state.propsToGroup = state.propsToGroup.filter(
         (property) => property != prop
       );
+    },
+    setParamsLevels(state, paramsLevels) {
+      state.paramsLevels = paramsLevels;
     },
   },
   actions: {},

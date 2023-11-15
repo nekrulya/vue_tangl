@@ -4,6 +4,7 @@
       <h2 class="title">Выберите избранное своство</h2>
       <div class="favs">
         <div class="favs__item" @click="addTotal">Общее количество</div>
+        <div class="favs__item" @click="addLevels">Расчет по этажам</div>
       </div>
     </div>
   </div>
@@ -28,6 +29,9 @@ export default {
       params: (state) => state.params,
       api: (state) => state.api,
       accessToken: (state) => state.accessToken,
+      paramsLevels: (state) => state.paramsLevels,
+      choosedModelId: (state) => state.choosedModelId,
+      positionChildrenList: (state) => state.positionChildrenList,
     }),
   },
 
@@ -36,6 +40,7 @@ export default {
       setDialogVisibleFav: "setDialogVisibleFav",
       addChoosedProperty: "addChoosedProperty",
       addValueToPosInParams: "addValueToPosInParams",
+      setParamsLevels: "setParamsLevels",
     }),
 
     // скрыть модальное окно
@@ -79,6 +84,82 @@ export default {
 
       this.favName = "";
     },
+
+    async getItemsValuesForNewProp() {
+      let items = [];
+      for (let child of this.positionChildrenList) {
+        for (let lvl of this.paramsLevels) {
+          axios({
+            method: "get",
+            url: `${
+              this.api.getElementTotalByLevel1 +
+              child.id +
+              this.api.getElementTotalByLevel2 +
+              lvl
+            }`,
+            params: {},
+            data: {},
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${this.accessToken}`,
+            },
+          })
+            .then((response) => {
+              console.log(child.name);
+              console.log(lvl);
+              console.log(response.data.count);
+              let res = [child.id, lvl, response.data.count];
+              this.addValueToPosInParams(res);
+              // items[lvl] = response.data.count;
+              // newProp.items[lvl] = response.data.count;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+      return items;
+    },
+
+    async addLevels(e) {
+      axios({
+        method: "get",
+        url: `${this.api.getLevels + this.choosedModelId}`,
+        params: {},
+        data: {},
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      })
+        .then((response) => {
+          console.log(response.data.levels);
+          this.setParamsLevels(response.data.levels);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      const newProp = {
+        path: "Расчет_по_этажам",
+        name: "Расчет_по_этажам",
+        tableName: "Расчет по этажам",
+        isGroup: true,
+        items: [],
+      };
+
+      for (let item of this.paramsLevels) {
+        newProp.items.push({
+          name: item,
+          path: item,
+          tableName: item,
+          isGroup: false,
+        });
+      }
+
+      this.addChoosedProperty(newProp);
+      this.getItemsValuesForNewProp();
+    },
   },
 };
 </script>
@@ -107,7 +188,6 @@ export default {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  /* justify-content: start; */
   align-items: center;
 }
 

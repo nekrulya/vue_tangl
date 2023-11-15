@@ -51,8 +51,8 @@
 <script>
 import axios from "axios";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
-import ProjectFolders from "@/components/ProjectFolders.vue";
-import PositionList from "@/components/PositionList.vue";
+import ProjectFolders from "@/components/Modals/ProjectFolders.vue";
+import PositionList from "@/components/Modals/PositionList.vue";
 
 export default {
   props: [],
@@ -82,6 +82,7 @@ export default {
       choosedCatalogId: (state) => state.choosedCatalogId,
       positionList: (state) => state.positionList,
       api: (state) => state.api,
+      choosedProperties: (state) => state.choosedProperties,
     }),
   },
 
@@ -96,6 +97,7 @@ export default {
       setFolders: "setFolders",
       setChoosedCatalogId: "setChoosedCatalogId",
       setPositionList: "setPositionList",
+      setChoosedProperties: "setChoosedProperties",
     }),
 
     // скрыть модальное окно
@@ -107,6 +109,7 @@ export default {
     updateProjects(e) {
       this.setChoosedCompany(this.companies[e.target.selectedIndex - 1]);
       this.setChoosedCompanyId(e.target.value);
+      this.setChoosedProperties([]);
       axios({
         method: "get",
         url: `${this.api.projectList + this.choosedCompanyId}`,
@@ -129,6 +132,7 @@ export default {
     // получить список папок
     updateProjectFolders(e) {
       this.setChoosedProjectId(e.target.value);
+      this.setChoosedProperties([]);
       axios({
         method: "get",
         url: `${this.api.projectFoldersList + this.choosedProjectId}`,
@@ -151,6 +155,7 @@ export default {
     // получить список позиций
     updatePositionList(e) {
       this.setChoosedCatalogId(e.target.value);
+      this.setChoosedProperties([]);
       axios({
         method: "get",
         url: `${this.api.positionList + this.choosedCatalogId}`,

@@ -4,19 +4,19 @@
       <div class="title">Свойства в таблице</div>
       <div class="buttons">
         <img
-          src="../assets/group.png"
+          src="@/assets/group.png"
           alt="group"
           @click="openGroupCreate"
           class="cp"
         />
         <img
-          src="../assets/func.png"
+          src="@/assets/func.png"
           alt="func"
           @click="openFuncCreate"
           class="cp"
         />
         <img
-          src="../assets/saved.png"
+          src="@/assets/saved.png"
           alt="saved"
           class="cp"
           @click="openFavCreate"
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import ChoosedList from "./ChoosedList.vue";
+import ChoosedList from "@/components/ChoosedParamsList/ChoosedList.vue";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {

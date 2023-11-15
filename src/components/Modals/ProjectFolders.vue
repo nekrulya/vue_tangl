@@ -43,10 +43,12 @@ export default {
     ...mapMutations({
       setChoosedModelId: "setChoosedModelId",
       setCatalogs: "setCatalogs",
+      setChoosedProperties: "setChoosedProperties",
     }),
 
     updateCatalogs(e) {
       this.setChoosedModelId(e.target.value);
+      this.setChoosedProperties([]);
       axios({
         method: "get",
         url: `${this.api.catalogs + this.choosedModelId}`,

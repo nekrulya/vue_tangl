@@ -11,6 +11,7 @@
           {{ company.company_name }}
         </option>
       </select>
+      <Loader v-if="this.loader.modal.projects" />
       <select
         class="companies"
         @change="updateProjectFolders"
@@ -25,7 +26,9 @@
           {{ project.project_name }}
         </option>
       </select>
+      <Loader v-if="this.loader.modal.folders" />
       <ProjectFolders :folders="this.folders" v-if="this.folders.length > 0" />
+      <Loader v-if="this.loader.modal.catalogs" />
       <select
         class="companies"
         @change="updatePositionList"
@@ -40,6 +43,7 @@
           {{ catalog.catalog_name }}
         </option>
       </select>
+      <Loader v-if="this.loader.modal.positions" />
       <PositionList
         :positions="this.positionList"
         v-if="this.positionList.length > 0"
@@ -53,6 +57,7 @@ import axios from "axios";
 import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 import ProjectFolders from "@/components/Modals/ProjectFolders.vue";
 import PositionList from "@/components/Modals/PositionList.vue";
+import Loader from "@/components/Loader.vue";
 
 export default {
   props: [],
@@ -64,6 +69,7 @@ export default {
   components: {
     ProjectFolders,
     PositionList,
+    Loader,
   },
 
   computed: {
@@ -83,6 +89,7 @@ export default {
       positionList: (state) => state.positionList,
       api: (state) => state.api,
       choosedProperties: (state) => state.choosedProperties,
+      loader: (state) => state.loader,
     }),
   },
 
@@ -98,6 +105,7 @@ export default {
       setChoosedCatalogId: "setChoosedCatalogId",
       setPositionList: "setPositionList",
       setChoosedProperties: "setChoosedProperties",
+      setLoader: "setLoader",
     }),
 
     // скрыть модальное окно
@@ -110,6 +118,7 @@ export default {
       this.setChoosedCompany(this.companies[e.target.selectedIndex - 1]);
       this.setChoosedCompanyId(e.target.value);
       this.setChoosedProperties([]);
+      this.setLoader(["modal", "projects", true]);
       axios({
         method: "get",
         url: `${this.api.projectList + this.choosedCompanyId}`,
@@ -123,6 +132,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.setProjects(response.data.projects);
+          this.setLoader(["modal", "projects", false]);
         })
         .catch((error) => {
           console.log(error);
@@ -133,6 +143,7 @@ export default {
     updateProjectFolders(e) {
       this.setChoosedProjectId(e.target.value);
       this.setChoosedProperties([]);
+      this.setLoader(["modal", "folders", true]);
       axios({
         method: "get",
         url: `${this.api.projectFoldersList + this.choosedProjectId}`,
@@ -146,6 +157,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.setFolders(response.data.folders);
+          this.setLoader(["modal", "folders", false]);
         })
         .catch((error) => {
           console.log(error);
@@ -156,6 +168,7 @@ export default {
     updatePositionList(e) {
       this.setChoosedCatalogId(e.target.value);
       this.setChoosedProperties([]);
+      this.setLoader(["modal", "positions", true]);
       axios({
         method: "get",
         url: `${this.api.positionList + this.choosedCatalogId}`,
@@ -169,6 +182,7 @@ export default {
         .then((response) => {
           this.setPositionList(response.data.children);
           console.log(response.data);
+          this.setLoader(["modal", "positions", false]);
         })
         .catch((error) => {
           console.log(error);

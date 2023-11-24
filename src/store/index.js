@@ -62,6 +62,15 @@ export default createStore({
         "http://192.168.102.197:8000/api/app/calculations/getElementTotalByLevel?position_id=",
       getElementTotalByLevel2: "&level_name=",
     },
+    loader: {
+      modal: {
+        companies: false,
+        projets: false,
+        folders: false,
+        catalogs: false,
+        positions: false,
+      },
+    },
   },
   getters: {
     getChoosedProperties(state) {
@@ -197,6 +206,9 @@ export default createStore({
     },
     setParamsLevels(state, paramsLevels) {
       state.paramsLevels = paramsLevels;
+    },
+    setLoader(state, [key1, key2, value]) {
+      state.loader[key1][key2] = value;
     },
   },
   actions: {},

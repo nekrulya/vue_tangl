@@ -36,6 +36,7 @@ export default {
       accessToken: (state) => state.accessToken,
       choosedModelId: (state) => state.choosedModelId,
       api: (state) => state.api,
+      loader: (state) => state.loader,
     }),
   },
 
@@ -44,11 +45,14 @@ export default {
       setChoosedModelId: "setChoosedModelId",
       setCatalogs: "setCatalogs",
       setChoosedProperties: "setChoosedProperties",
+      setLoader: "setLoader",
     }),
 
     updateCatalogs(e) {
       this.setChoosedModelId(e.target.value);
       this.setChoosedProperties([]);
+      this.setLoader(["modal", "catalogs", true]);
+
       axios({
         method: "get",
         url: `${this.api.catalogs + this.choosedModelId}`,
@@ -62,6 +66,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.setCatalogs(response.data.catalogs);
+          this.setLoader(["modal", "catalogs", false]);
         })
         .catch((error) => {
           console.log(error);
